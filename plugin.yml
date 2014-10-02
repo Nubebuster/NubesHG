@@ -1,0 +1,8 @@
+name: NubesHG
+author: NubeBuster
+version: 1.0
+main: me.Mark.HG.HG
+commands:
+  kit:
+    description: Choose what kit to play with!
+    aliases: [class]

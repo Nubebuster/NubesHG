@@ -3,6 +3,9 @@ package me.Mark.HG;
 import java.io.File;
 import java.io.IOException;
 
+import me.Mark.HG.Commands.Kitcmd;
+import me.Mark.HG.Kits.Kit;
+import me.Mark.HG.Listeners.AllTimeListener;
 import me.Mark.HG.Listeners.GameListener;
 import me.Mark.HG.Listeners.PreGameListener;
 
@@ -23,13 +26,15 @@ public class HG extends JavaPlugin {
 	public void onEnable() {
 		HG = this;
 		configs();
+		getCommand("kit").setExecutor(new Kitcmd());
 
 		startPregameTimer();
-
+		Bukkit.getPluginManager().registerEvents(new AllTimeListener(), this);
 		registerPreEvents();
 		registerCommands();
 	}
 
+	@SuppressWarnings("unused")
 	private int PreGameTask, GameTask;
 
 	private void startPregameTimer() {
@@ -50,6 +55,7 @@ public class HG extends JavaPlugin {
 						} else if (PreTime == 0) {
 							PreTime = -1;
 							start();
+							return;
 						}
 						PreTime--;
 					}
@@ -57,6 +63,7 @@ public class HG extends JavaPlugin {
 	}
 
 	private void start() {
+		Bukkit.getScheduler().cancelTask(PreGameTask);
 		unRegisterPreEvents();
 		registerGameEvents();
 		Bukkit.getServer().broadcastMessage(
@@ -71,6 +78,7 @@ public class HG extends JavaPlugin {
 	private void registerGameEvents() {
 		gameListener = new GameListener();
 		Bukkit.getPluginManager().registerEvents(gameListener, this);
+		Kit.registerKitEvents(this);
 	}
 
 	private void registerPreEvents() {
@@ -88,8 +96,7 @@ public class HG extends JavaPlugin {
 	private void configs() {
 		if (!getDataFolder().exists())
 			getDataFolder().mkdir();
-		File file = new File(getDataFolder() + File.separator
-				+ "config.yml");
+		File file = new File(getDataFolder() + File.separator + "config.yml");
 		config = getConfig();
 		if (!file.exists()) {
 			try {
