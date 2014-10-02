@@ -9,12 +9,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -23,6 +25,23 @@ import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class AllTimeListener implements Listener {
+
+	@EventHandler
+	public void onChat(AsyncPlayerChatEvent event) {
+		if (!Gamer.getGamer(event.getPlayer()).isAlive())
+			event.setFormat("<§8%s§r> %s");
+	}
+
+	@EventHandler
+	public void onJoinOP(PlayerJoinEvent event) {
+		if (event.getPlayer().isOp()) {
+			event.getPlayer().setPlayerListName(
+					ChatColor.RED + event.getPlayer().getName());
+			event.getPlayer().setDisplayName(
+					ChatColor.RED + event.getPlayer().getName()
+							+ ChatColor.RESET);
+		}
+	}
 
 	@EventHandler
 	public void onMove(PlayerMoveEvent event) {
@@ -64,6 +83,7 @@ public class AllTimeListener implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
+		new Gamer(event.getPlayer());
 		if (HG.HG.GameTime > -1) {
 			event.getPlayer().setGameMode(GameMode.CREATIVE);
 		}
@@ -101,7 +121,7 @@ public class AllTimeListener implements Listener {
 		Entity ghast = p.getWorld().spawnCreature(gloc, EntityType.GHAST);
 		p.damage(4, ghast);
 		ghast.remove();
-		// p.playSound(p.getLocation(), Sound.FIZZ, 10, 1);
+		p.playSound(p.getLocation(), Sound.FIZZ, 10, 1);
 	}
 
 	@EventHandler

@@ -17,16 +17,17 @@ public abstract class Kit implements Listener {
 	public static List<Kit> kits = new ArrayList<Kit>();
 
 	public static void init() {
-		kits.add(new Archer());
+		registerKit(new None());
+		registerKit(new Archer());
 	}
 
 	public static void registerKit(Kit kit) {
-		Kit.kits.add(kit);
+		kits.add(kit);
 	}
 
 	public static Kit getKitFromName(String kit) {
 		for (Kit k : kits)
-			if (k.getKitName() == kit)
+			if (k.getKitName().equalsIgnoreCase(kit))
 				return k;
 		return null;
 	}

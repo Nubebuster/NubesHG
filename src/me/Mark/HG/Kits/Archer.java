@@ -64,7 +64,6 @@ public class Archer extends Kit {
 				event.getDrops().addAll(event.getDrops());
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent event) {
 		if (!(event.getEntity() instanceof LivingEntity))

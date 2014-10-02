@@ -8,6 +8,7 @@ import me.Mark.HG.HG;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -25,17 +27,24 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class GameListener implements Listener {
 
-/*	@EventHandler
-	public void onLogin(PlayerLoginEvent event) {
-		event.disallow(Result.KICK_OTHER, ChatColor.RED
-				+ "The game has already started.");
-	}*/
+	/*
+	 * @EventHandler public void onLogin(PlayerLoginEvent event) {
+	 * event.disallow(Result.KICK_OTHER, ChatColor.RED +
+	 * "The game has already started."); }
+	 */
+
+	@EventHandler
+	public void onDamageInv(EntityDamageEvent event) {
+		if (event.getEntity() instanceof Player && HG.HG.GameTime < 120)
+			event.setCancelled(true);
+	}
 
 	private Random r = new Random();
 
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
 		Player dead = event.getEntity();
+		dead.setGameMode(GameMode.CREATIVE);
 		if (event.getEntity().getKiller() != null) {
 			Player killer = event.getEntity().getKiller();
 			String weapon = WordUtils.capitalizeFully(killer.getItemInHand()
@@ -51,11 +60,12 @@ public class GameListener implements Listener {
 						+ " with a " + weapon);
 		} else if (event.getEntity().getLastDamageCause().getCause() == DamageCause.FALL) {
 			event.setDeathMessage("%p fell to their death");
+		} else if (event.getDeathMessage().contains("by Ghast")) {
+			event.setDeathMessage("%p ran into the forcefield!");
 		} else {
 			event.setDeathMessage(event.getDeathMessage().replace(
 					dead.getName(), "%p"));
 		}
-
 		event.setDeathMessage(ChatColor.AQUA
 				+ event.getDeathMessage().replace(
 						"%p",
@@ -63,8 +73,6 @@ public class GameListener implements Listener {
 								+ Gamer.getGamer(dead).getKit().getKitName()
 								+ ")") + ".\n" + HG.check()
 				+ " players remaining.");
-		
-		dead.setGameMode(GameMode.CREATIVE);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -78,6 +86,20 @@ public class GameListener implements Listener {
 				event.setDamage(damage);
 			}
 		}
+	}
+
+	@EventHandler
+	public void onSoup(PlayerInteractEvent event) {
+		Player p = event.getPlayer();
+		if (p.getItemInHand() == null
+				|| p.getItemInHand().getType() != Material.MUSHROOM_SOUP
+				|| (p.getHealth() == 20 && p.getFoodLevel() >= 20))
+			return;
+		if (p.getHealth() < 20)
+			p.setHealth(p.getHealth() <= 13 ? p.getHealth() + 7 : 20);
+		else if (p.getFoodLevel() < 20)
+			p.setFoodLevel(p.getFoodLevel() <= 13 ? p.getFoodLevel() + 7 : 20);
+		p.getItemInHand().setType(Material.BOWL);
 	}
 
 	@EventHandler

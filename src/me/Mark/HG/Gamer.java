@@ -22,7 +22,7 @@ public class Gamer {
 	public Kit getKit() {
 		return kit;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public Player getPlayer() {
 		return Bukkit.getPlayer(name);
@@ -43,7 +43,7 @@ public class Gamer {
 	public void setAlive(boolean alive) {
 		this.alive = alive;
 	}
-	
+
 	public void remove() {
 		gamers.remove(this);
 	}
@@ -52,20 +52,32 @@ public class Gamer {
 
 	public static Gamer getGamer(Player p) {
 		for (Gamer g : gamers)
-			if (g.getName().equals(p.getName()))
+			if (g.getName().equalsIgnoreCase(p.getName()))
 				return g;
 		return null;
 	}
 
 	public static Gamer getGamer(String name) {
 		for (Gamer g : gamers)
-			if (g.getName().equals(name))
+			if (g.getName().equalsIgnoreCase(name))
 				return g;
 		return null;
 	}
-	
+
 	public static List<Gamer> getGamers() {
-		 return gamers;
+		return gamers;
 	}
 
+	public static List<Gamer> getAliveGamers() {
+		List<Gamer> alive = new ArrayList<Gamer>();
+		for (Gamer g : gamers)
+			if (g.isAlive())
+				alive.add(g);
+		return alive;
+	}
+
+	public void applyKit() {
+		if (kit.getItems() != null)
+			getPlayer().getInventory().addItem(kit.getItems());
+	}
 }

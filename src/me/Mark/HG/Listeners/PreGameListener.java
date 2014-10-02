@@ -4,7 +4,6 @@ import me.Mark.HG.Gamer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -41,7 +40,6 @@ public class PreGameListener implements Listener {
 
 	@EventHandler
 	public void onDamage(EntityDamageEvent event) {
-		if (event.getEntity() instanceof Player)
 			event.setCancelled(true);
 	}
 
