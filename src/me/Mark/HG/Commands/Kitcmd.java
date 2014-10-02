@@ -16,7 +16,7 @@ public class Kitcmd implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2,
 			String[] args) {
-		if (HG.GameTime > -1)
+		if (HG.HG.GameTime > -1)
 			return false;
 		if (args.length == 0) {
 			String kitss = null;

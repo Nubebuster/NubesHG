@@ -5,12 +5,13 @@ import java.util.List;
 
 import me.Mark.HG.Kits.Kit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class Gamer {
 
 	private String name;
-	private Kit kit;
+	private Kit kit = Kit.getKitFromName("None");
 	private boolean alive = true;
 
 	public Gamer(Player player) {
@@ -20,6 +21,11 @@ public class Gamer {
 
 	public Kit getKit() {
 		return kit;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public Player getPlayer() {
+		return Bukkit.getPlayer(name);
 	}
 
 	public void setKit(Kit kit) {
@@ -56,6 +62,10 @@ public class Gamer {
 			if (g.getName().equals(name))
 				return g;
 		return null;
+	}
+	
+	public static List<Gamer> getGamers() {
+		 return gamers;
 	}
 
 }

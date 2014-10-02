@@ -10,7 +10,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
 public class PreGameListener implements Listener {
 
@@ -18,6 +21,16 @@ public class PreGameListener implements Listener {
 	public void onBreak(BlockBreakEvent event) {
 		if (Gamer.getGamer(event.getPlayer()).isAlive())
 			event.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onPickup(PlayerPickupItemEvent event) {
+		event.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onDrop(PlayerDropItemEvent event) {
+		event.setCancelled(true);
 	}
 
 	@EventHandler
@@ -37,5 +50,11 @@ public class PreGameListener implements Listener {
 		event.getPlayer().teleport(
 				new Location(Bukkit.getWorld("world"), .5, 80, .5));
 		event.getPlayer().performCommand("/kit");
+	}
+
+	@EventHandler
+	public void onInteract(PlayerInteractEvent event) {
+		if (Gamer.getGamer(event.getPlayer()).isAlive())
+			event.setCancelled(true);
 	}
 }

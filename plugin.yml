@@ -6,3 +6,4 @@ commands:
   kit:
     description: Choose what kit to play with!
     aliases: [class]
+  go:
