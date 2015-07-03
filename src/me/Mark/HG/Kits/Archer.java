@@ -1,6 +1,5 @@
 package me.Mark.HG.Kits;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
@@ -15,7 +14,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class Archer extends Kit {
 
@@ -26,14 +24,10 @@ public class Archer extends Kit {
 
 	@EventHandler
 	public void onBreak(BlockBreakEvent event) {
-		if (hasAbillity(event.getPlayer())
-				&& event.getBlock().getType() == Material.GRAVEL) {
+		if (hasAbillity(event.getPlayer()) && event.getBlock().getType() == Material.GRAVEL) {
 			event.getBlock().setType(Material.AIR);
-			event.getBlock()
-					.getWorld()
-					.dropItemNaturally(
-							event.getBlock().getLocation().add(0.5, 0, 0.5),
-							new ItemStack(Material.FLINT));
+			event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation().add(0.5, 0, 0.5),
+					new ItemStack(Material.FLINT));
 		}
 	}
 
@@ -47,9 +41,8 @@ public class Archer extends Kit {
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
 		for (ItemStack is : event.getDrops()) {
-			if ((((is.getType() == Material.BOW && is.getEnchantments()
-					.containsKey(Enchantment.ARROW_KNOCKBACK))) || is.getType() == Material.ARROW)
-					&& hasAbillity(event.getEntity()))
+			if ((((is.getType() == Material.BOW && is.getEnchantments().containsKey(Enchantment.ARROW_KNOCKBACK)))
+					|| is.getType() == Material.ARROW) && hasAbillity(event.getEntity()))
 				is.setType(Material.AIR);
 		}
 	}
@@ -59,8 +52,7 @@ public class Archer extends Kit {
 		if (!(event.getEntity().getKiller() instanceof Player))
 			return;
 		if (hasAbillity(event.getEntity().getKiller()))
-			if (event.getEntity() instanceof Skeleton
-					|| event.getEntity() instanceof Chicken)
+			if (event.getEntity() instanceof Skeleton || event.getEntity() instanceof Chicken)
 				event.getDrops().addAll(event.getDrops());
 	}
 
@@ -68,8 +60,7 @@ public class Archer extends Kit {
 	public void onDamage(EntityDamageByEntityEvent event) {
 		if (!(event.getEntity() instanceof LivingEntity))
 			return;
-		if (((LivingEntity) event.getEntity()).getNoDamageTicks() >= 10
-				|| event.isCancelled())
+		if (((LivingEntity) event.getEntity()).getNoDamageTicks() >= 10 || event.isCancelled())
 			return;
 		if (event.getDamager() instanceof Arrow) {
 			final Arrow arrow = (Arrow) event.getDamager();
@@ -84,15 +75,10 @@ public class Archer extends Kit {
 	}
 
 	public ItemStack[] getItems() {
-		ItemStack bow = new ItemStack(Material.BOW);
+		ItemStack bow = createItem(Material.BOW, "§lBow", false);
 		bow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
 
-		ItemMeta bowim = bow.getItemMeta();
-		bowim.setDisplayName(ChatColor.BOLD + "Bow");
-		bow.setItemMeta(bowim);
-
-		ItemStack[] items = new ItemStack[] { bow,
-				new ItemStack(Material.ARROW, 10) };
+		ItemStack[] items = new ItemStack[] { bow, new ItemStack(Material.ARROW, 10) };
 		return items;
 	}
 }

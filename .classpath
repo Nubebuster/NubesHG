@@ -2,7 +2,15 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="G:/bukkit/1.7/bukkit-1.7.9-R0.2.jar"/>
-	<classpathentry kind="lib" path="S:/Users/Mark/Servers/Plugin tester/craftbukkit-1.7.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mark/Desktop/sdf/Bukkit/target/bukkit-1.8.7-R0.1-SNAPSHOT.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="https://hub.spigotmc.org/javadocs/bukkit/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Mark/Desktop/sdf/Spigot/Spigot-Server/target/spigot-1.8.7-R0.1-SNAPSHOT.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="https://hub.spigotmc.org/javadocs/bukkit/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

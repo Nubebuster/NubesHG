@@ -2,9 +2,6 @@ package me.Mark.HG.Listeners;
 
 import java.util.Random;
 
-import me.Mark.HG.Gamer;
-import me.Mark.HG.HG;
-
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -24,6 +21,11 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+
+import me.Mark.HG.Gamer;
+import me.Mark.HG.HG;
+import me.Mark.HG.Utils.Undroppable;
 
 public class GameListener implements Listener {
 
@@ -45,34 +47,30 @@ public class GameListener implements Listener {
 	public void onDeath(PlayerDeathEvent event) {
 		Player dead = event.getEntity();
 		dead.setGameMode(GameMode.CREATIVE);
+		for (ItemStack is : event.getDrops())
+			if (is.containsEnchantment(Undroppable.ench))
+				event.getDrops().remove(is);// TODO test
 		if (event.getEntity().getKiller() != null) {
 			Player killer = event.getEntity().getKiller();
-			String weapon = WordUtils.capitalizeFully(killer.getItemInHand()
-					.getType().toString().replace("_", " ").toLowerCase());
-			String killname = killer.getName() + "("
-					+ Gamer.getGamer(killer).getKit().getKitName() + ")";
+			String weapon = WordUtils
+					.capitalizeFully(killer.getItemInHand().getType().toString().replace("_", " ").toLowerCase());
+			String killname = killer.getName() + "(" + Gamer.getGamer(killer).getKit().getKitName() + ")";
 			int random = r.nextInt(2);
 			if (random == 0)
-				event.setDeathMessage("%p entered their next life, courtesy of "
-						+ killname + "'s " + weapon);
+				event.setDeathMessage("%p entered their next life, courtesy of " + killname + "'s " + weapon);
 			else if (random == 1)
-				event.setDeathMessage("%p was killed by " + killname
-						+ " with a " + weapon);
+				event.setDeathMessage("%p was killed by " + killname + " with a " + weapon);
 		} else if (event.getEntity().getLastDamageCause().getCause() == DamageCause.FALL) {
 			event.setDeathMessage("%p fell to their death");
 		} else if (event.getDeathMessage().contains("by Ghast")) {
 			event.setDeathMessage("%p ran into the forcefield!");
 		} else {
-			event.setDeathMessage(event.getDeathMessage().replace(
-					dead.getName(), "%p"));
+			event.setDeathMessage(event.getDeathMessage().replace(dead.getName(), "%p"));
 		}
 		event.setDeathMessage(ChatColor.AQUA
-				+ event.getDeathMessage().replace(
-						"%p",
-						dead.getName() + "("
-								+ Gamer.getGamer(dead).getKit().getKitName()
-								+ ")") + ".\n" + HG.check()
-				+ " players remaining.");
+				+ event.getDeathMessage().replace("%p",
+						dead.getName() + "(" + Gamer.getGamer(dead).getKit().getKitName() + ")")
+				+ ".\n" + HG.check() + " players remaining.");
 	}
 
 	@SuppressWarnings("deprecation")
@@ -91,8 +89,7 @@ public class GameListener implements Listener {
 	@EventHandler
 	public void onSoup(PlayerInteractEvent event) {
 		Player p = event.getPlayer();
-		if (p.getItemInHand() == null
-				|| p.getItemInHand().getType() != Material.MUSHROOM_SOUP
+		if (p.getItemInHand() == null || p.getItemInHand().getType() != Material.MUSHROOM_SOUP
 				|| (p.getHealth() == 20 && p.getFoodLevel() >= 20))
 			return;
 		if (p.getHealth() < 20)
@@ -105,10 +102,7 @@ public class GameListener implements Listener {
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent event) {
 		event.setRespawnLocation(event.getPlayer().getLocation());
-		event.getPlayer()
-				.sendMessage(
-						ChatColor.GRAY
-								+ "You are now a spectator, /go <player> to teleport to a player");
+		event.getPlayer().sendMessage(ChatColor.GRAY + "You are now a spectator, /go <player> to teleport to a player");
 	}
 
 	@EventHandler

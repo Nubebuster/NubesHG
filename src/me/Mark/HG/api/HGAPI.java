@@ -6,7 +6,7 @@ public class HGAPI {
 	
 	/**
 	 * Register your custom kits
-	 * @param kit The kit to register
+	 * @param kit The me.Mark.HG.Kit to register
 	 */
 	public static void registerKit(Kit kit) {
 		Kit.registerKit(kit);

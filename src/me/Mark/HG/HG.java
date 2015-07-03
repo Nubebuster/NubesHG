@@ -2,7 +2,21 @@ package me.Mark.HG;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Random;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import me.Mark.HG.Commands.Go;
 import me.Mark.HG.Commands.Kitcmd;
@@ -11,18 +25,7 @@ import me.Mark.HG.Kits.Kit;
 import me.Mark.HG.Listeners.AllTimeListener;
 import me.Mark.HG.Listeners.GameListener;
 import me.Mark.HG.Listeners.PreGameListener;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
+import me.Mark.HG.Utils.Undroppable;
 
 /**
  * @author Mark Cockram - NubeBuster
@@ -46,6 +49,7 @@ public class HG extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new AllTimeListener(), this);
 		registerPreEvents();
 		registerCommands();
+		registerEnchantments();
 
 		Bukkit.getServer().getScheduler()
 				.scheduleSyncRepeatingTask(this, new Lag(), 20L, 1L);
@@ -176,6 +180,24 @@ public class HG extends JavaPlugin {
 		getCommand("kit").setExecutor(new Kitcmd());
 		getCommand("go").setExecutor(new Go());
 		getCommand("lag").setExecutor(new Lag());
+	}
+	
+	private void registerEnchantments() {
+		try {
+			try {
+				Field f = Enchantment.class.getDeclaredField("acceptingNew");
+				f.setAccessible(true);
+				f.set(null, true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				Enchantment.registerEnchantment(Undroppable.ench);
+			} catch (IllegalArgumentException e) {
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void configs() {

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import me.Mark.HG.Gamer;
 import me.Mark.HG.HG;
+import me.Mark.HG.Utils.Undroppable;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -17,6 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -35,11 +37,8 @@ public class AllTimeListener implements Listener {
 	@EventHandler
 	public void onJoinOP(PlayerJoinEvent event) {
 		if (event.getPlayer().isOp()) {
-			event.getPlayer().setPlayerListName(
-					ChatColor.RED + event.getPlayer().getName());
-			event.getPlayer().setDisplayName(
-					ChatColor.RED + event.getPlayer().getName()
-							+ ChatColor.RESET);
+			event.getPlayer().setPlayerListName(ChatColor.RED + event.getPlayer().getName());
+			event.getPlayer().setDisplayName(ChatColor.RED + event.getPlayer().getName() + ChatColor.RESET);
 		}
 	}
 
@@ -63,6 +62,12 @@ public class AllTimeListener implements Listener {
 	public void onGM(PlayerGameModeChangeEvent event) {
 		Gamer g = Gamer.getGamer(event.getPlayer());
 		g.setAlive(event.getNewGameMode() == GameMode.SURVIVAL);
+	}
+
+	@EventHandler
+	public void onDrop(PlayerDropItemEvent event) {
+		if (event.getItemDrop().getItemStack().containsEnchantment(Undroppable.ench))
+			event.setCancelled(true);
 	}
 
 	@EventHandler
@@ -95,15 +100,14 @@ public class AllTimeListener implements Listener {
 	@EventHandler
 	public void onForce(PlayerMoveEvent event) {
 		Player p = event.getPlayer();
-		if (ffc.containsKey(p.getName())
-				&& ffc.get(p.getName()) > System.currentTimeMillis())
+		if (ffc.containsKey(p.getName()) && ffc.get(p.getName()) > System.currentTimeMillis())
 			return;
 		ffc.put(p.getName(), System.currentTimeMillis() + 500);
 		Location loc = p.getLocation();
-		if (!(loc.getBlockX() > 500) && !(loc.getBlockX() < -500)
-				&& !(loc.getBlockZ() > 500) && !(loc.getBlockZ() < -500)) {
-			if (!(loc.getBlockX() > 450) && !(loc.getBlockX() < -450)
-					&& !(loc.getBlockZ() > 450) && !(loc.getBlockZ() < -450))
+		if (!(loc.getBlockX() > 500) && !(loc.getBlockX() < -500) && !(loc.getBlockZ() > 500)
+				&& !(loc.getBlockZ() < -500)) {
+			if (!(loc.getBlockX() > 450) && !(loc.getBlockX() < -450) && !(loc.getBlockZ() > 450)
+					&& !(loc.getBlockZ() < -450))
 				return;
 			p.sendMessage(ChatColor.GOLD + "Warning: forcefield is nearby!");
 			return;
@@ -130,13 +134,11 @@ public class AllTimeListener implements Listener {
 		if (p.getInventory().getItemInHand().getType() == Material.COMPASS) {
 			if (getNearest(p) == null) {
 				p.setCompassTarget(p.getWorld().getSpawnLocation());
-				p.sendMessage(ChatColor.RED
-						+ "No valid targets found, compass pointing toward spawn.");
+				p.sendMessage(ChatColor.RED + "No valid targets found, compass pointing toward spawn.");
 				return;
 			}
 			p.setCompassTarget(getNearest(p).getLocation());
-			p.sendMessage(ChatColor.YELLOW + "Compass pointing at "
-					+ getNearest(p).getName());
+			p.sendMessage(ChatColor.YELLOW + "Compass pointing at " + getNearest(p).getName());
 		}
 	}
 
