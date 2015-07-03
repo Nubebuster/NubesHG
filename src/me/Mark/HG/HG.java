@@ -18,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.Mark.HG.Commands.GM;
 import me.Mark.HG.Commands.Go;
 import me.Mark.HG.Commands.Kitcmd;
 import me.Mark.HG.Commands.Lag;
@@ -180,6 +181,7 @@ public class HG extends JavaPlugin {
 		getCommand("kit").setExecutor(new Kitcmd());
 		getCommand("go").setExecutor(new Go());
 		getCommand("lag").setExecutor(new Lag());
+		getCommand("gm").setExecutor(new GM());
 	}
 	
 	private void registerEnchantments() {

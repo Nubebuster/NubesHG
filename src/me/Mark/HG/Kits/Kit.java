@@ -26,9 +26,11 @@ public abstract class Kit implements Listener {
 		registerKit(new None());
 		registerKit(new Archer());
 		registerKit(new Demoman());
+		registerKit(new Endermage());
 		registerKit(new FisherMan());
 		registerKit(new Reaper());
 		registerKit(new Snail());
+		registerKit(new Stomper());
 		registerKit(new Viper());
 	}
 

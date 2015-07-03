@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 public class Kitcmd implements CommandExecutor {
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2,
 			String[] args) {

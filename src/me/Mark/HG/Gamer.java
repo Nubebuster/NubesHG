@@ -2,20 +2,23 @@ package me.Mark.HG;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.Mark.HG.Kits.Kit;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import me.Mark.HG.Kits.Kit;
+
 public class Gamer {
 
 	private String name;
+	private UUID uuid;
 	private Kit kit = Kit.getKitFromName("None");
 	private boolean alive = true;
 
 	public Gamer(Player player) {
 		this.name = player.getName();
+		this.uuid = player.getUniqueId();
 		gamers.add(this);
 	}
 
@@ -23,9 +26,8 @@ public class Gamer {
 		return kit;
 	}
 
-	@SuppressWarnings("deprecation")
 	public Player getPlayer() {
-		return Bukkit.getPlayer(name);
+		return Bukkit.getPlayer(uuid);
 	}
 
 	public void setKit(Kit kit) {
@@ -54,12 +56,23 @@ public class Gamer {
 		for (Gamer g : gamers)
 			if (g.getName().equalsIgnoreCase(p.getName()))
 				return g;
-		return null;
+		return new Gamer(p);
 	}
 
+	/**
+	 * @deprecated use getGamer(UUID) instead
+	 */
+	@Deprecated
 	public static Gamer getGamer(String name) {
 		for (Gamer g : gamers)
 			if (g.getName().equalsIgnoreCase(name))
+				return g;
+		return null;
+	}
+
+	public static Gamer getGamer(UUID id) {
+		for (Gamer g : gamers)
+			if (g.getPlayer().getUniqueId().equals(id))
 				return g;
 		return null;
 	}
