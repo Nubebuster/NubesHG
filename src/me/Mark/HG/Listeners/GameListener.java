@@ -81,7 +81,7 @@ public class GameListener implements Listener {
 			if (!damager.isOnGround() && damager.getFallDistance() > 0) {
 				double damage = event.getDamage() / 150;
 				damage *= 100;
-				event.setDamage(damage);
+				event.setDamage(damage - 1);
 			}
 		}
 	}

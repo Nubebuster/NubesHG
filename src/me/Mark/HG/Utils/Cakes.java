@@ -1,4 +1,4 @@
-package me.Mark.HG;
+package me.Mark.HG.Utils;
 
 import java.util.Random;
 
@@ -14,6 +14,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
+
+import me.Mark.HG.HG;
 
 public class Cakes {
 	public static void cakes(final Player p) {
