@@ -112,7 +112,7 @@ public class Feast {
 
 	public static void spawnChests(final Location loc) {
 		spawnChestTimer = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-				Bukkit.getPluginManager().getPlugin("NubesHG"), new Runnable() {
+				HG.HG, new Runnable() {
 					@Override
 					public void run() {
 						if (timer == -1) {

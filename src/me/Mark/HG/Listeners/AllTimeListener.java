@@ -15,6 +15,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -81,9 +82,12 @@ public class AllTimeListener implements Listener {
 			event.setCancelled(true);
 	}
 
-	@EventHandler
+	
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onQuit(PlayerQuitEvent event) {
-		Gamer.getGamer(event.getPlayer()).remove();
+		Gamer g = Gamer.getGamer(event.getPlayer());
+		if (!g.isAlive())
+			g.remove();
 	}
 
 	@EventHandler

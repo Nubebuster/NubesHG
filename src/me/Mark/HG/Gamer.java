@@ -37,6 +37,10 @@ public class Gamer {
 	public String getName() {
 		return name;
 	}
+	
+	public UUID getUUID() {
+		return uuid;
+	}
 
 	public boolean isAlive() {
 		return alive;

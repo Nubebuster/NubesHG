@@ -1,8 +1,10 @@
 package me.Mark.HG.Listeners;
 
 import java.util.Random;
+import java.util.UUID;
 
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -20,6 +22,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -46,7 +49,6 @@ public class GameListener implements Listener {
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
 		Player dead = event.getEntity();
-		dead.setGameMode(GameMode.CREATIVE);
 		for (ItemStack is : event.getDrops())
 			if (is.containsEnchantment(Undroppable.ench))
 				event.getDrops().remove(is);// TODO test
@@ -67,6 +69,7 @@ public class GameListener implements Listener {
 		} else {
 			event.setDeathMessage(event.getDeathMessage().replace(dead.getName(), "%p"));
 		}
+		dead.setGameMode(GameMode.CREATIVE);
 		event.setDeathMessage(ChatColor.AQUA
 				+ event.getDeathMessage().replace("%p",
 						dead.getName() + "(" + Gamer.getGamer(dead).getKit().getKitName() + ")")
@@ -157,5 +160,22 @@ public class GameListener implements Listener {
 			if (!Gamer.getGamer((Player) event.getDamager()).isAlive())
 				event.setCancelled(true);
 		}
+	}
+
+	@EventHandler
+	public void onQuit(PlayerQuitEvent event) {
+		final Gamer g = Gamer.getGamer(event.getPlayer());
+		if (!g.isAlive())
+			return;
+		Bukkit.getScheduler().scheduleSyncDelayedTask(HG.HG, new Runnable() {
+			public void run() {
+				if (g.getPlayer() == null) {
+					g.remove();
+					Bukkit.getServer().broadcastMessage(ChatColor.AQUA + g.getName() + "(" + g.getKit().getKitName()
+							+ ") was disconnected for too long and has forfeit!");
+					HG.check();
+				}
+			}
+		}, 1200);
 	}
 }

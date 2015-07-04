@@ -17,7 +17,7 @@ import me.Mark.HG.HG;
 import me.Mark.HG.Utils.Undroppable;
 
 public abstract class Kit implements Listener {
-	
+
 	protected static final Random random = new Random();
 
 	public static List<Kit> kits = new ArrayList<Kit>();
@@ -37,6 +37,10 @@ public abstract class Kit implements Listener {
 	}
 
 	public static void registerKit(Kit kit) {
+		for (Kit k : kits)
+			if (k.getKitName().equalsIgnoreCase(kit.getKitName()))
+				throw new Exception(
+						"Tried to register kit with the name " + kit.getKitName() + ", but that is already in use.");
 		kits.add(kit);
 	}
 
