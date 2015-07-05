@@ -19,7 +19,7 @@ public class FeastCmd implements CommandExecutor {
 		}
 		Location feast = Feast.getFeastLoc();
 		if (feast == null) {
-			sender.sendMessage(ChatColor.RED + "The feast has not been spanwed yet.");
+			sender.sendMessage(ChatColor.RED + "The feast has not been spawned yet.");
 		} else {
 			((Player) sender).setCompassTarget(feast);
 			sender.sendMessage(ChatColor.GREEN + "Your compass is now pointing towards the feast!");

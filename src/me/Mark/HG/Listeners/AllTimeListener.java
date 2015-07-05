@@ -2,6 +2,7 @@ package me.Mark.HG.Listeners;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -14,6 +15,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
@@ -53,20 +56,28 @@ public class AllTimeListener implements Listener {
 		}
 	}
 
+	/*
+	 * @EventHandler public void onMove(PlayerMoveEvent event) { Gamer g =
+	 * Gamer.getGamer(event.getPlayer()); if (g.isAlive()) { for (Gamer og :
+	 * Gamer.getGamers()) { if (!g.isAlive())
+	 * g.getPlayer().hidePlayer(og.getPlayer()); else
+	 * g.getPlayer().showPlayer(og.getPlayer()); } } else for (Gamer og :
+	 * Gamer.getGamers()) g.getPlayer().showPlayer(og.getPlayer()); }
+	 */
+
 	@EventHandler
-	public void onMove(PlayerMoveEvent event) {
-		Gamer g = Gamer.getGamer(event.getPlayer());
-		if (g.isAlive()) {
-			for (Gamer og : Gamer.getGamers()) {
-				if (!g.isAlive())
-					g.getPlayer().hidePlayer(og.getPlayer());
-				else
-					g.getPlayer().showPlayer(og.getPlayer());
-			}
-		} else
-			for (Gamer og : Gamer.getGamers()) {
-				g.getPlayer().showPlayer(og.getPlayer());
-			}
+	public void onInv(InventoryClickEvent event) {
+		if (!Gamer.getGamer((Player) event.getWhoClicked()).isAlive())
+			event.setCancelled(true);
+		if (event.getInventory() == null)
+			return;
+		if (((event.getCurrentItem() != null && event.getCurrentItem().containsEnchantment(Undroppable.ench))
+				|| (event.getClick() == ClickType.NUMBER_KEY
+						&& event.getWhoClicked().getInventory().getItem(event.getHotbarButton()) != null
+						&& event.getWhoClicked().getInventory().getItem(event.getHotbarButton())
+								.containsEnchantment(Undroppable.ench)))
+				&& event.getInventory().getHolder() != event.getWhoClicked().getInventory().getHolder())
+			event.setCancelled(true);
 	}
 
 	@EventHandler
@@ -158,21 +169,20 @@ public class AllTimeListener implements Listener {
 	public Player getNearest(Player p) {
 		double distance = Double.POSITIVE_INFINITY;
 		Player target = null;
-		for (Entity e : p.getNearbyEntities(1000, 1000, 1000)) {
-			if (!(e instanceof Player))
+		for (Player op : Bukkit.getOnlinePlayers()) {
+			if (op == p)
 				continue;
-			Player p1 = (Player) e;
-			if (!Gamer.getGamer(p1).isAlive())
+			if (!(op.getWorld() == p.getWorld()))
 				continue;
-			if (e == p)
+			if (!Gamer.getGamer(op).isAlive())
 				continue;
-			double distanceto = p.getLocation().distance(e.getLocation());
+			double distanceto = p.getLocation().distance(op.getLocation());
 			if (distanceto > distance)
 				continue;
 			if (distanceto < 25)
 				continue;
 			distance = distanceto;
-			target = (Player) e;
+			target = op;
 		}
 		return target;
 	}

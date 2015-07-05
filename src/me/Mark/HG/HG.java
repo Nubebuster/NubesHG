@@ -23,10 +23,13 @@ import org.bukkit.potion.PotionEffectType;
 
 import me.Mark.HG.Commands.FFeastCmd;
 import me.Mark.HG.Commands.FTimeCmd;
+import me.Mark.HG.Commands.FeastCmd;
 import me.Mark.HG.Commands.GM;
 import me.Mark.HG.Commands.GoCmd;
+import me.Mark.HG.Commands.InvCmd;
 import me.Mark.HG.Commands.KitCmd;
 import me.Mark.HG.Commands.Lag;
+import me.Mark.HG.Commands.SpawnCmd;
 import me.Mark.HG.Commands.StartCmd;
 import me.Mark.HG.Handlers.Cakes;
 import me.Mark.HG.Handlers.Feast;
@@ -165,7 +168,8 @@ public class HG extends JavaPlugin {
 	private void registerGameEvents() {
 		gameListener = new GameListener();
 		Bukkit.getPluginManager().registerEvents(gameListener, this);
-		Kit.registerKitEvents(this);
+		Bukkit.getPluginManager().registerEvents(new Feast(), this);
+		Kit.registerKitEvents();
 	}
 
 	private void registerPreEvents() {
@@ -185,6 +189,9 @@ public class HG extends JavaPlugin {
 		getCommand("start").setExecutor(new StartCmd());
 		getCommand("forcetime").setExecutor(new FTimeCmd());
 		getCommand("forcefeast").setExecutor(new FFeastCmd());
+		getCommand("feast").setExecutor(new FeastCmd());
+		getCommand("invsee").setExecutor(new InvCmd());
+		getCommand("spawn").setExecutor(new SpawnCmd());
 	}
 
 	private void registerEnchantments() {

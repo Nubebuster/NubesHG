@@ -9,3 +9,10 @@ retime: 120
 minimum: 2
 #Time the feast should start
 feast: 720
+#Should soup heal?
+soup: true
+#How much should soup heal?
+heals: 7
+#Disabled Kits
+disabled:
+ - Kangaroo

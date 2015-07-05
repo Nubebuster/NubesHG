@@ -13,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +23,7 @@ import org.bukkit.potion.PotionType;
 import me.Mark.HG.HG;
 import me.Mark.HG.api.FeastEvent;
 
-public class Feast {
+public class Feast implements Listener {
 
 	private static boolean happened = false;
 	public static List<ItemStack> items;
@@ -43,7 +44,7 @@ public class Feast {
 				event.setCancelled(true);
 		}
 	}
-
+	
 	public static Location createFeast(boolean forced) {
 		if (!forced && happened)
 			return null;
@@ -55,7 +56,13 @@ public class Feast {
 		final Location loc = w.getSpawnLocation();
 		loc.setX(getRandom(-100, 100));
 		loc.setZ(getRandom(-100, 100));
-		int y = loc.getWorld().getHighestBlockYAt(loc);
+		int y = 128;
+		Material mat = Material.AIR;
+		while (mat == Material.AIR || mat == Material.LEAVES || mat == Material.LEAVES_2 || mat == Material.LOG
+				|| mat == Material.LOG_2) {
+			y--;
+			mat = loc.getWorld().getBlockAt(loc.getBlockX(), y, loc.getBlockZ()).getType();
+		}
 		loc.setY(y);
 		feast = loc.clone();
 

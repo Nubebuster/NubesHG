@@ -59,28 +59,29 @@ public class Endermage extends Kit {
 
 				Location loc2 = b.getLocation();
 				loc2.add(0.0D, 1.0D, 0.0D);
-				checker(p, loc2, b, mat);
+				checker(p, loc2, b, mat, event.getClickedBlock().getData());
 				cooldown.put(p.getName(), Long.valueOf(System.currentTimeMillis() + 5500L));
 			}
 		}
 	}
 
-	public void checker(final Player p, final Location loc2, final Block b, final Material mat) {
-		times.put(p.getName(), Integer.valueOf(5));
-		task.put(p.getName(), Integer.valueOf(Bukkit.getScheduler().scheduleSyncRepeatingTask(HG.HG, new Runnable() {
+	public void checker(final Player p, final Location loc2, final Block b, final Material mat, final byte data) {
+		times.put(p.getName(), 10);
+		task.put(p.getName(), Bukkit.getScheduler().scheduleSyncRepeatingTask(HG.HG, new Runnable() {
+			@SuppressWarnings("deprecation")
 			public void run() {
-				if (((Integer) times.get(p.getName())).intValue() == 0) {
-					b.setType(mat);
-					Bukkit.getScheduler().cancelTask(((Integer) task.get(p.getName())).intValue());
+				if (times.get(p.getName()) == 0) {
+					b.setTypeIdAndData(mat.getId(), data, false);
+					Bukkit.getScheduler().cancelTask(task.get(p.getName()));
 					task.remove(p.getName());
 					times.remove(p.getName());
 					return;
 				}
 
-				List<Entity> nearby = p.getNearbyEntities(2.0D, 256.0D, 2.0D);
+				List<Entity> nearby = p.getNearbyEntities(3.0D, 256.0D, 3.0D);
 				List<Entity> teleported = new ArrayList<Entity>();
 				for (Entity e : nearby) {
-					if (p.getLocation().distance(e.getLocation()) < 2.0D)
+					if (e.getLocation().distance(b.getLocation()) < 4.0D)
 						return;
 					if ((e instanceof Player)) {
 						if (((Player) e).getGameMode() == GameMode.CREATIVE) {
@@ -100,19 +101,19 @@ public class Endermage extends Kit {
 					}
 				}
 				if (teleported.size() >= 1) {
-					b.setType(mat);
+					b.setTypeIdAndData(mat.getId(), data, false);
 					p.sendMessage(ChatColor.RED
 							+ "Teleport succesful. You are invincible for 5 seconds. Prepare to fight!!!");
 					invincible.add(p.getName());
 					remove(p);
-					Bukkit.getScheduler().cancelTask(((Integer) task.get(p.getName())).intValue());
+					Bukkit.getScheduler().cancelTask(task.get(p.getName()));
 					task.remove(p.getName());
 					times.remove(p.getName());
 					return;
 				}
-				times.put(p.getName(), Integer.valueOf(((Integer) times.get(p.getName())).intValue() - 1));
+				times.put(p.getName(), times.get(p.getName()) - 1);
 			}
-		}, 0L, 20L)));
+		}, 0L, 10L));
 	}
 
 	public void remove(final Player p) {

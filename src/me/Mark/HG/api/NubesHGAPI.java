@@ -1,19 +1,19 @@
 package me.Mark.HG.api;
 
 import me.Mark.HG.Kits.Kit;
-import me.Mark.HG.Utils.AlreadyInUseException;
+import me.Mark.HG.Utils.NameAlreadyInUseException;
 
-public class HGAPI {
+public class NubesHGAPI {
 
 	/**
 	 * Register your custom kits
 	 * 
 	 * @param kit
 	 *            The me.Mark.HG.Kit to register
-	 * @throws AlreadyInUseException
+	 * @throws NameAlreadyInUseException
 	 *             if the kit name is already in use
 	 */
-	public static void registerKit(Kit kit) throws AlreadyInUseException {
+	public static void registerKit(Kit kit) throws NameAlreadyInUseException {
 		Kit.registerKit(kit);
 	}
 }

@@ -17,4 +17,6 @@ commands:
     aliases: [ftime]
   forcefeast:
     aliases: [ffeast]
-  
+  invsee:
+    aliases: [inv]
+  spawn:

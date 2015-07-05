@@ -80,7 +80,7 @@ public class GameListener implements Listener {
 		} else {
 			event.setDeathMessage(event.getDeathMessage().replace(dead.getName(), "%p"));
 		}
-		dead.setGameMode(GameMode.CREATIVE);
+		dead.setGameMode(GameMode.SPECTATOR);
 		event.setDeathMessage(ChatColor.AQUA
 				+ event.getDeathMessage().replace("%p",
 						dead.getName() + "(" + Gamer.getGamer(dead).getKit().getKitName() + ")")
@@ -95,21 +95,24 @@ public class GameListener implements Listener {
 			if (!damager.isOnGround() && damager.getFallDistance() > 0) {
 				double damage = event.getDamage() / 150;
 				damage *= 100;
-				event.setDamage(damage - 1);
+				event.setDamage(damage - 1 < 1 ? 1 : damage - 1);
 			}
 		}
 	}
 
 	@EventHandler
 	public void onSoup(PlayerInteractEvent event) {
+		if (!HG.HG.config.getBoolean("soup"))
+			return;
 		Player p = event.getPlayer();
 		if (p.getItemInHand() == null || p.getItemInHand().getType() != Material.MUSHROOM_SOUP
 				|| (p.getHealth() == 20 && p.getFoodLevel() >= 20))
 			return;
-		if (p.getHealth() < 20)
-			p.setHealth(p.getHealth() <= 13 ? p.getHealth() + 7 : 20);
+		int heal = HG.HG.config.getInt("heals");
+		if (p.getHealth() < 19.5)
+			p.setHealth(p.getHealth() <= (20 - heal) ? p.getHealth() + heal : 20);
 		else if (p.getFoodLevel() < 20)
-			p.setFoodLevel(p.getFoodLevel() <= 13 ? p.getFoodLevel() + 7 : 20);
+			p.setFoodLevel(p.getFoodLevel() + heal);
 		p.getItemInHand().setType(Material.BOWL);
 	}
 
