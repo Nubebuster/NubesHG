@@ -40,7 +40,7 @@ public class GameListener implements Listener {
 
 	@EventHandler
 	public void onDamageInv(EntityDamageEvent event) {
-		if (event.getEntity() instanceof Player && HG.HG.GameTime < 120)
+		if (event.getEntity() instanceof Player && HG.HG.gameTime < 120)
 			event.setCancelled(true);
 	}
 

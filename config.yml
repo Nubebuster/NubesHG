@@ -1,1 +1,9 @@
 rewriteconfig: false
+#Time the timer should start at
+pregamedelay: 180
+#Time the timer should go to when not enough players
+retime: 120
+#Minimum amount of players required to start
+minimum: 2
+#Time the feast should start
+feast: 720

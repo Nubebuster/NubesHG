@@ -11,13 +11,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Kitcmd implements CommandExecutor {
+public class KitCmd implements CommandExecutor {
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2,
 			String[] args) {
-		if (HG.HG.GameTime > -1)
+		if (HG.HG.gameTime > -1)
 			return false;
 		if (args.length == 0) {
 			String kitss = null;

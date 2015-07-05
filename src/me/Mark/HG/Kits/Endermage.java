@@ -42,7 +42,7 @@ public class Endermage extends Kit {
 			p.updateInventory();
 			if (!hasAbillity(p))
 				return;
-			if (HG.HG.GameTime < 120)
+			if (HG.HG.gameTime < 120)
 				return;
 			Block b = event.getClickedBlock();
 			if ((b.getRelative(BlockFace.UP).getType() != Material.AIR)

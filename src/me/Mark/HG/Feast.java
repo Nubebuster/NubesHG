@@ -24,20 +24,23 @@ public class Feast {
 	public static List<ItemStack> items;
 	private static Location feast;
 
+	public static Location getFeastLoc() {
+		return feast;
+	}
+
 	@EventHandler
 	public void onBreak(BlockBreakEvent event) {
 		if (feast == null)
 			return;
 		Location loc = event.getBlock().getLocation().clone();
-		if (feast.getBlockY() - loc.getBlockY() < 5
-				&& feast.getBlockY() - loc.getBlockY() > -20) {
+		if (feast.getBlockY() - loc.getBlockY() < 5 && feast.getBlockY() - loc.getBlockY() > -20) {
 			loc.setY(feast.getY());
 			if (feast.distance(loc) < 22)
 				event.setCancelled(true);
 		}
 	}
 
-	public static void CreateFeast() {
+	public static void createFeast() {
 		addItems();
 		int radius = 20;
 		World w = Bukkit.getServer().getWorld("world");
@@ -53,19 +56,17 @@ public class Feast {
 		for (int x = -radius; x <= radius; x++) {
 			for (int z = -radius; z <= radius; z++) {
 				if ((x * x) + (z * z) <= radiusSquared) {
-					w.getBlockAt((int) loc.getX() + x, (int) loc.getY() - 1,
-							(int) loc.getZ() + z).setType(Material.GRASS);
+					w.getBlockAt((int) loc.getX() + x, (int) loc.getY() - 1, (int) loc.getZ() + z)
+							.setType(Material.GRASS);
 					for (int i = 0; i < 20; i++) {
-						w.getBlockAt((int) loc.getX() + x,
-								(int) loc.getY() + i, (int) loc.getZ() + z)
+						w.getBlockAt((int) loc.getX() + x, (int) loc.getY() + i, (int) loc.getZ() + z)
 								.setType(Material.AIR);
 					}
 				}
 			}
 		}
-		Bukkit.getServer().broadcastMessage(
-				ChatColor.RED + "Feast will begin at (" + loc.getX() + ", "
-						+ (loc.getY()) + ", " + loc.getZ() + ") in 5 minutes");
+		Bukkit.getServer().broadcastMessage(ChatColor.RED + "Feast will begin at (" + loc.getX() + ", " + (loc.getY())
+				+ ", " + loc.getZ() + ") in 5 minutes. /feast to set your compass to the feast.");
 		spawnChests(loc);
 	}
 
@@ -78,20 +79,15 @@ public class Feast {
 					int size = items.size() - 1;
 					ItemStack item = items.get(getRandom(0, size));
 					ItemStack is = new ItemStack(item);
-					if (item.getType() == Material.ARROW
-							|| item.getType() == Material.MUSHROOM_SOUP) {
+					if (item.getType() == Material.ARROW || item.getType() == Material.MUSHROOM_SOUP) {
 						is.setAmount(getRandom(1, 12));
-					} else if (item.getType() == Material.COOKED_BEEF
-							|| item.getType() == Material.GRILLED_PORK) {
+					} else if (item.getType() == Material.COOKED_BEEF || item.getType() == Material.GRILLED_PORK) {
 						is.setAmount(getRandom(1, 16));
-					} else if (item.getType() == Material.WEB
-							|| item.getType() == Material.TNT) {
+					} else if (item.getType() == Material.WEB || item.getType() == Material.TNT) {
 						is.setAmount(getRandom(1, 8));
-					} else if (item.getType() == Material.DIAMOND_SWORD
-							|| item.getType() == Material.DIAMOND_HELMET
+					} else if (item.getType() == Material.DIAMOND_SWORD || item.getType() == Material.DIAMOND_HELMET
 							|| item.getType() == Material.DIAMOND_CHESTPLATE
-							|| item.getType() == Material.DIAMOND_LEGGINGS
-							|| item.getType() == Material.DIAMOND_BOOTS
+							|| item.getType() == Material.DIAMOND_LEGGINGS || item.getType() == Material.DIAMOND_BOOTS
 							|| item.getType() == Material.BOW) {
 						if (chancedia == 1) {
 							is.setType(Material.AIR);
@@ -111,44 +107,36 @@ public class Feast {
 	private static int spawnChestTimer;
 
 	public static void spawnChests(final Location loc) {
-		spawnChestTimer = Bukkit.getScheduler().scheduleSyncRepeatingTask(
-				HG.HG, new Runnable() {
-					@Override
-					public void run() {
-						if (timer == -1) {
-							Bukkit.getScheduler().cancelTask(spawnChestTimer);
-							return;
-						}
-						if (timer == 0) {
-							timer = -1;
-							placeChests(loc);
-							return;
-						}
-						if (timer == 180 || timer == 120 || timer == 60) {
-							int minutes = timer / 60;
-							Bukkit.getServer().broadcastMessage(
-									ChatColor.RED + "Feast will begin at ("
-											+ loc.getX() + ", " + (loc.getY())
-											+ ", " + loc.getZ() + ") in "
-											+ minutes + " minutes");
-							timer--;
-							return;
-						}
-						if (timer == 30 || timer == 15 || timer == 10
-								|| timer == 5 || timer == 4 || timer == 3
-								|| timer == 2 || timer == 1) {
-							int seconds = timer;
-							Bukkit.getServer().broadcastMessage(
-									ChatColor.RED + "Feast will begin at ("
-											+ loc.getX() + ", " + (loc.getY())
-											+ ", " + loc.getZ() + ") in "
-											+ seconds + " seconds");
-							timer--;
-							return;
-						}
-						timer--;
-					}
-				}, 20, 20);
+		spawnChestTimer = Bukkit.getScheduler().scheduleSyncRepeatingTask(HG.HG, new Runnable() {
+			@Override
+			public void run() {
+				if (timer == -1) {
+					Bukkit.getScheduler().cancelTask(spawnChestTimer);
+					return;
+				}
+				if (timer == 0) {
+					timer = -1;
+					placeChests(loc);
+					return;
+				}
+				if (timer == 180 || timer == 120 || timer == 60) {
+					int minutes = timer / 60;
+					Bukkit.getServer().broadcastMessage(ChatColor.RED + "Feast will begin at (" + loc.getX() + ", "
+							+ (loc.getY()) + ", " + loc.getZ() + ") in " + minutes + " minutes");
+					timer--;
+					return;
+				}
+				if (timer == 30 || timer == 15 || timer == 10 || timer == 5 || timer == 4 || timer == 3 || timer == 2
+						|| timer == 1) {
+					int seconds = timer;
+					Bukkit.getServer().broadcastMessage(ChatColor.RED + "Feast will begin at (" + loc.getX() + ", "
+							+ (loc.getY()) + ", " + loc.getZ() + ") in " + seconds + " seconds");
+					timer--;
+					return;
+				}
+				timer--;
+			}
+		}, 20, 20);
 	}
 
 	public static void placeChests(Location loc) {

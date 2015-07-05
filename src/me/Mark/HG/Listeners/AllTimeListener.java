@@ -78,7 +78,7 @@ public class AllTimeListener implements Listener {
 
 	@EventHandler
 	public void onHunger(FoodLevelChangeEvent event) {
-		if (HG.HG.GameTime < 120)
+		if (HG.HG.gameTime < 120)
 			event.setCancelled(true);
 	}
 
@@ -93,7 +93,7 @@ public class AllTimeListener implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
 		new Gamer(event.getPlayer());
-		if (HG.HG.GameTime > -1) {
+		if (HG.HG.gameTime > -1) {
 			event.getPlayer().setGameMode(GameMode.CREATIVE);
 		}
 	}
