@@ -17,7 +17,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -36,14 +35,16 @@ public class Endermage extends Kit {
 	@EventHandler
 	public void onPlayerEndermage(PlayerInteractEvent event) {
 		Player p = event.getPlayer();
-		if ((event.getPlayer().getItemInHand().getType() == Material.PORTAL)
+		if ((event.getPlayer().getItemInHand().getType() == Material.ENDER_PORTAL_FRAME)
 				&& (event.getAction() == Action.RIGHT_CLICK_BLOCK) && (event.getClickedBlock() != null)) {
 			event.setCancelled(true);
 			p.updateInventory();
 			if (!hasAbillity(p))
 				return;
-			if (HG.HG.gameTime < 120)
+			if (HG.HG.gameTime < 120) {
+				event.getPlayer().sendMessage(ChatColor.RED + "You can do that once the invincibillity has worn off.");
 				return;
+			}
 			Block b = event.getClickedBlock();
 			if ((b.getRelative(BlockFace.UP).getType() != Material.AIR)
 					|| (b.getRelative(BlockFace.UP).getRelative(BlockFace.UP).getType() != Material.AIR)) {
@@ -92,7 +93,7 @@ public class Endermage extends Kit {
 							tp.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD
 									+ "You got teleported by an endermage. You are invincible for 5 seconds. Prepare to fight!!!");
 							invincible.add(tp.getName());
-							Remove(tp);
+							remove(tp);
 							if (!teleported.contains(tp))
 								teleported.add(tp);
 						}
@@ -103,19 +104,18 @@ public class Endermage extends Kit {
 					p.sendMessage(ChatColor.RED
 							+ "Teleport succesful. You are invincible for 5 seconds. Prepare to fight!!!");
 					invincible.add(p.getName());
-					Remove(p);
+					remove(p);
 					Bukkit.getScheduler().cancelTask(((Integer) task.get(p.getName())).intValue());
 					task.remove(p.getName());
 					times.remove(p.getName());
 					return;
 				}
-
 				times.put(p.getName(), Integer.valueOf(((Integer) times.get(p.getName())).intValue() - 1));
 			}
 		}, 0L, 20L)));
 	}
 
-	public void Remove(final Player p) {
+	public void remove(final Player p) {
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(HG.HG, new Runnable() {
 			public void run() {
 				invincible.remove(p.getName());
@@ -143,15 +143,8 @@ public class Endermage extends Kit {
 
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent event) {
-		if (event.getItemDrop().getItemStack().getType() == Material.PORTAL)
+		if (event.getItemDrop().getItemStack().getType() == Material.ENDER_PORTAL_FRAME)
 			event.setCancelled(true);
-	}
-
-	@EventHandler
-	public void onDeath(PlayerDeathEvent event) {
-		for (ItemStack is : event.getDrops())
-			if (is.getType() == Material.PORTAL)
-				is.setType(Material.AIR);
 	}
 
 	@Override
@@ -161,6 +154,6 @@ public class Endermage extends Kit {
 
 	@Override
 	public ItemStack[] getItems() {
-		return new ItemStack[] { createItem(Material.PORTAL, "§lPortal", false) };
+		return new ItemStack[] { createItem(Material.ENDER_PORTAL_FRAME, "§lPortal", false) };
 	}
 }

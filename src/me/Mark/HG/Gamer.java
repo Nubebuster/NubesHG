@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import me.Mark.HG.Kits.Kit;
 
@@ -14,9 +16,9 @@ public class Gamer {
 	private String name;
 	private UUID uuid;
 	private Kit kit = Kit.getKitFromName("None");
-	private boolean alive = true;
+	private boolean alive = false;
 
-	public Gamer(Player player) {
+	private Gamer(Player player) {
 		this.name = player.getName();
 		this.uuid = player.getUniqueId();
 		gamers.add(this);
@@ -37,7 +39,7 @@ public class Gamer {
 	public String getName() {
 		return name;
 	}
-	
+
 	public UUID getUUID() {
 		return uuid;
 	}
@@ -87,14 +89,16 @@ public class Gamer {
 
 	public static List<Gamer> getAliveGamers() {
 		List<Gamer> alive = new ArrayList<Gamer>();
+		boolean started = HG.HG.gameTime > -1;
 		for (Gamer g : gamers)
-			if (g.isAlive())
+			if (started ? g.isAlive() : g.getPlayer().getGameMode() == GameMode.SURVIVAL)
 				alive.add(g);
 		return alive;
 	}
 
 	public void applyKit() {
 		if (kit.getItems() != null)
-			getPlayer().getInventory().addItem(kit.getItems());
+			for (ItemStack is : kit.getItems())
+				getPlayer().getInventory().addItem(is);
 	}
 }

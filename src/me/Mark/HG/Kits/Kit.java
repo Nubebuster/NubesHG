@@ -14,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import me.Mark.HG.Gamer;
 import me.Mark.HG.HG;
+import me.Mark.HG.Utils.AlreadyInUseException;
 import me.Mark.HG.Utils.Undroppable;
 
 public abstract class Kit implements Listener {
@@ -23,23 +24,27 @@ public abstract class Kit implements Listener {
 	public static List<Kit> kits = new ArrayList<Kit>();
 
 	public static void init() {
-		registerKit(new None());
-		registerKit(new Archer());
-		registerKit(new Demoman());
-		registerKit(new Endermage());
-		registerKit(new FisherMan());
-		registerKit(new Miner());
-		registerKit(new Monk());
-		registerKit(new Reaper());
-		registerKit(new Snail());
-		registerKit(new Stomper());
-		registerKit(new Viper());
+		try {
+			registerKit(new None());
+			registerKit(new Archer());
+			registerKit(new Demoman());
+			registerKit(new Endermage());
+			registerKit(new FisherMan());
+			registerKit(new Miner());
+			registerKit(new Monk());
+			registerKit(new Reaper());
+			registerKit(new Snail());
+			registerKit(new Stomper());
+			registerKit(new Viper());
+		} catch (AlreadyInUseException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public static void registerKit(Kit kit) {
+	public static void registerKit(Kit kit) throws AlreadyInUseException {
 		for (Kit k : kits)
 			if (k.getKitName().equalsIgnoreCase(kit.getKitName()))
-				throw new Exception(
+				throw new AlreadyInUseException(
 						"Tried to register kit with the name " + kit.getKitName() + ", but that is already in use.");
 		kits.add(kit);
 	}

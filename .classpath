@@ -12,6 +12,5 @@
 			<attribute name="javadoc_location" value="https://hub.spigotmc.org/javadocs/bukkit/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Users/Gebruiker/Desktop/Van Mark/mars/Test Server/spigot.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -24,7 +25,7 @@ public class Demoman extends Kit {
 
 	@Override
 	public ItemStack[] getItems() {
-		return new ItemStack[] { new ItemStack(Material.GRAVEL, 8), new ItemStack(Material.STONE_PLATE) };
+		return new ItemStack[] { new ItemStack(Material.GRAVEL, 8), new ItemStack(Material.STONE_PLATE, 8) };
 	}
 
 	private static List<Block> traps = new ArrayList<Block>();
@@ -59,9 +60,10 @@ public class Demoman extends Kit {
 		if (!(event.getAction() == Action.PHYSICAL))
 			return;
 		Block b = event.getClickedBlock();
+		Location ex = b.getRelative(BlockFace.UP).getLocation();
 		if (b.getType() == Material.STONE_PLATE && traps.contains(b)) {
 			traps.remove(b);
-			b.getWorld().createExplosion(b.getLocation(), 5F);
+			b.getWorld().createExplosion(ex, 5F);
 		}
 	}
 }

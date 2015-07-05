@@ -1,7 +1,8 @@
 package me.Mark.HG.Listeners;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
@@ -49,21 +50,29 @@ public class GameListener implements Listener {
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
 		Player dead = event.getEntity();
+		List<ItemStack> drops = new ArrayList<ItemStack>();
 		for (ItemStack is : event.getDrops())
-			if (is.containsEnchantment(Undroppable.ench))
-				event.getDrops().remove(is);// TODO test
+			if (!is.containsEnchantment(Undroppable.ench))
+				drops.add(is);
+		event.getDrops().clear();
+		for (ItemStack is : drops)
+			event.getDrops().add(is);
+		DamageCause cause = event.getEntity().getLastDamageCause().getCause();
 		if (event.getEntity().getKiller() != null) {
 			Player killer = event.getEntity().getKiller();
 			String weapon = WordUtils
 					.capitalizeFully(killer.getItemInHand().getType().toString().replace("_", " ").toLowerCase());
 			String killname = killer.getName() + "(" + Gamer.getGamer(killer).getKit().getKitName() + ")";
-			int random = r.nextInt(2);
-			if (random == 0)
+			if (r.nextBoolean())
 				event.setDeathMessage("%p entered their next life, courtesy of " + killname + "'s " + weapon);
-			else if (random == 1)
+			else
 				event.setDeathMessage("%p was killed by " + killname + " with a " + weapon);
-		} else if (event.getEntity().getLastDamageCause().getCause() == DamageCause.FALL) {
-			event.setDeathMessage("%p fell to their death");
+		} else if (cause == DamageCause.FALL) {
+			event.setDeathMessage(r.nextBoolean() ? "%p fell to their death" : "%p fell really far");
+		} else if (cause == DamageCause.BLOCK_EXPLOSION || cause == DamageCause.ENTITY_EXPLOSION) {
+			String[] causes = new String[] { "%p Don't. Play. With. TNT", "%p was blown to smithereens",
+					"%p exploded into a million pieces" };
+			event.setDeathMessage(causes[r.nextInt(causes.length)]);
 		} else if (event.getDeathMessage().contains("by Ghast")) {
 			event.setDeathMessage("%p ran into the forcefield!");
 		} else {

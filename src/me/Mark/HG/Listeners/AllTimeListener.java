@@ -26,6 +26,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.ServerListPingEvent;
 
 public class AllTimeListener implements Listener {
 
@@ -33,6 +34,15 @@ public class AllTimeListener implements Listener {
 	public void onChat(AsyncPlayerChatEvent event) {
 		if (!Gamer.getGamer(event.getPlayer()).isAlive())
 			event.setFormat("<§8%s§r> %s");
+	}
+
+	@EventHandler
+	public void onPing(ServerListPingEvent event) {
+		if (HG.HG.preTime > -1) {
+			event.setMotd(ChatColor.RED + "Game starting in " + HG.HG.preTime + " seconds.");
+		} else {
+			event.setMotd(ChatColor.RED + "The game has already started.");
+		}
 	}
 
 	@EventHandler
@@ -82,7 +92,6 @@ public class AllTimeListener implements Listener {
 			event.setCancelled(true);
 	}
 
-	
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onQuit(PlayerQuitEvent event) {
 		Gamer g = Gamer.getGamer(event.getPlayer());
@@ -92,8 +101,8 @@ public class AllTimeListener implements Listener {
 
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		new Gamer(event.getPlayer());
-		if (HG.HG.gameTime > -1) {
+		Gamer g = Gamer.getGamer(event.getPlayer());
+		if (HG.HG.gameTime > -1 && !g.isAlive()) {
 			event.getPlayer().setGameMode(GameMode.CREATIVE);
 		}
 	}

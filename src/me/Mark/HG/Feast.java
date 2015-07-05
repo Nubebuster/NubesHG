@@ -21,6 +21,7 @@ import org.bukkit.potion.PotionType;
 
 public class Feast {
 
+	private static boolean happened = false;
 	public static List<ItemStack> items;
 	private static Location feast;
 
@@ -40,7 +41,10 @@ public class Feast {
 		}
 	}
 
-	public static void createFeast() {
+	public static Location createFeast(boolean forced) {
+		if (!forced && happened)
+			return null;
+		happened = true;
 		addItems();
 		int radius = 20;
 		World w = Bukkit.getServer().getWorld("world");
@@ -65,9 +69,14 @@ public class Feast {
 				}
 			}
 		}
+		if (forced) {
+			placeChests(loc);
+			return loc;
+		}
 		Bukkit.getServer().broadcastMessage(ChatColor.RED + "Feast will begin at (" + loc.getX() + ", " + (loc.getY())
 				+ ", " + loc.getZ() + ") in 5 minutes. /feast to set your compass to the feast.");
-		spawnChests(loc);
+		startTimer(loc);
+		return loc;
 	}
 
 	private static void fillChest(Inventory inv) {
@@ -106,7 +115,7 @@ public class Feast {
 	private static int timer = 300;
 	private static int spawnChestTimer;
 
-	public static void spawnChests(final Location loc) {
+	public static void startTimer(final Location loc) {
 		spawnChestTimer = Bukkit.getScheduler().scheduleSyncRepeatingTask(HG.HG, new Runnable() {
 			@Override
 			public void run() {
@@ -224,18 +233,18 @@ public class Feast {
 	public static void addItems() {
 		items = new ArrayList<ItemStack>() {
 			{
-				new ItemStack(Material.ARROW);
-				new ItemStack(Material.MUSHROOM_SOUP);
-				new ItemStack(Material.COOKED_BEEF);
-				new ItemStack(Material.GRILLED_PORK);
-				new ItemStack(Material.WEB);
-				new ItemStack(Material.TNT);
-				new ItemStack(Material.DIAMOND_SWORD);
-				new ItemStack(Material.DIAMOND_HELMET);
-				new ItemStack(Material.DIAMOND_CHESTPLATE);
-				new ItemStack(Material.DIAMOND_LEGGINGS);
-				new ItemStack(Material.DIAMOND_BOOTS);
-				new ItemStack(Material.BOW);
+				add(new ItemStack(Material.ARROW));
+				add(new ItemStack(Material.MUSHROOM_SOUP));
+				add(new ItemStack(Material.COOKED_BEEF));
+				add(new ItemStack(Material.GRILLED_PORK));
+				add(new ItemStack(Material.WEB));
+				add(new ItemStack(Material.TNT));
+				add(new ItemStack(Material.DIAMOND_SWORD));
+				add(new ItemStack(Material.DIAMOND_HELMET));
+				add(new ItemStack(Material.DIAMOND_CHESTPLATE));
+				add(new ItemStack(Material.DIAMOND_LEGGINGS));
+				add(new ItemStack(Material.DIAMOND_BOOTS));
+				add(new ItemStack(Material.BOW));
 			}
 		};
 

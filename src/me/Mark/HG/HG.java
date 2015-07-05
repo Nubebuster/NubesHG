@@ -1,12 +1,12 @@
 package me.Mark.HG;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -17,11 +17,15 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffectType;
 
+import me.Mark.HG.Commands.FFeastCmd;
+import me.Mark.HG.Commands.FTimeCmd;
 import me.Mark.HG.Commands.GM;
 import me.Mark.HG.Commands.GoCmd;
 import me.Mark.HG.Commands.KitCmd;
 import me.Mark.HG.Commands.Lag;
+import me.Mark.HG.Commands.StartCmd;
 import me.Mark.HG.Kits.Kit;
 import me.Mark.HG.Listeners.AllTimeListener;
 import me.Mark.HG.Listeners.GameListener;
@@ -56,7 +60,7 @@ public class HG extends JavaPlugin {
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Lag(), 20L, 1L);
 
 		for (Player p : Bukkit.getOnlinePlayers())
-			new Gamer(p);
+			Gamer.getGamer(p);
 	}
 
 	@SuppressWarnings("unused")
@@ -73,7 +77,7 @@ public class HG extends JavaPlugin {
 					Bukkit.getServer()
 							.broadcastMessage(ChatColor.RED + "Tournament starting in " + preTime + " seconds.");
 				} else if (preTime == 0) {
-					if (Gamer.getAliveGamers().size() <= minimumPlayers) {
+					if (Gamer.getAliveGamers().size() < minimumPlayers) {
 						Bukkit.getServer().broadcastMessage(ChatColor.RED + "Not enough players to start.");
 						preTime = resetTime;
 						return;
@@ -102,7 +106,7 @@ public class HG extends JavaPlugin {
 				} else if (gameTime == 120) {
 					Bukkit.getServer().broadcastMessage(ChatColor.RED + "The invincibillity has worn off!");
 				} else if (gameTime == feastTime) {
-					Feast.createFeast();
+					Feast.createFeast(false);
 				} else if (gameTime > 3600) {
 					shutdown(ChatColor.RED + "Game went on for too long!\nRestarting...");
 				}
@@ -111,6 +115,7 @@ public class HG extends JavaPlugin {
 		}, 0, 20);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void start() {
 		Bukkit.getScheduler().cancelTask(preGameTask);
 		unRegisterPreEvents();
@@ -123,13 +128,15 @@ public class HG extends JavaPlugin {
 				+ " players participating.\n" + "Everyone is invincible for 2 minutes.\n" + "Good Luck!");
 		World world = Bukkit.getWorld("world");
 		for (Gamer g : Gamer.getGamers()) {
-			if (!g.isAlive())
+			if (g.getPlayer().getGameMode() != GameMode.SURVIVAL)
 				continue;
-			g.getPlayer().getInventory().clear();
+			g.setAlive(true);
 			g.getPlayer().closeInventory();
+			clearPlayer(g.getPlayer());
 			g.getPlayer().getInventory().addItem(new ItemStack(Material.COMPASS));
 			g.applyKit();
-			g.getPlayer().teleport(new Location(world, getRandom(-100, 100), 80, getRandom(-100, 100)));
+			g.getPlayer().updateInventory();
+			g.getPlayer().teleport(new Location(world, getRandom(-50, 50), 80, getRandom(-50, 50)));
 		}
 		startGameTimer();
 	}
@@ -156,6 +163,9 @@ public class HG extends JavaPlugin {
 		getCommand("go").setExecutor(new GoCmd());
 		getCommand("lag").setExecutor(new Lag());
 		getCommand("gm").setExecutor(new GM());
+		getCommand("start").setExecutor(new StartCmd());
+		getCommand("forcetime").setExecutor(new FTimeCmd());
+		getCommand("forcefeast").setExecutor(new FFeastCmd());
 	}
 
 	private void registerEnchantments() {
@@ -177,28 +187,12 @@ public class HG extends JavaPlugin {
 	}
 
 	private void configs() {
-		if (!getDataFolder().exists())
-			getDataFolder().mkdir();
-		File file = new File(getDataFolder() + File.separator + "config.yml");
 		config = getConfig();
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			config.options().copyDefaults(true);
-			saveConfig();
-		}
+		saveDefaultConfig();
 		if (config.getBoolean("rewriteconfig")) {
-			try {
-				file.delete();
-				file.createNewFile();
-				config.options().copyDefaults(true);
-				saveConfig();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			File file = new File(getDataFolder() + File.separator + "config.yml");
+			file.delete();
+			saveDefaultConfig();
 		}
 		preTime = config.getInt("pregamedelay");
 		minimumPlayers = config.getInt("minimum");
@@ -244,7 +238,27 @@ public class HG extends JavaPlugin {
 		Bukkit.getServer().shutdown();
 	}
 
-	private static int getRandom(int lower, int upper) {
+	public static void clearPlayer(Player p) {
+		p.getInventory().clear();
+		p.getInventory().setHelmet(null);
+		p.getInventory().setChestplate(null);
+		p.getInventory().setLeggings(null);
+		p.getInventory().setBoots(null);
+		p.setHealth(20);
+		p.setFoodLevel(25);
+		p.setFireTicks(0);
+		p.setFallDistance(0.0F);
+		p.setLevel(0);
+		p.setExp(0);
+		for (PotionEffectType pe : PotionEffectType.values()) {
+			if (pe == null)
+				continue;
+			if (p.hasPotionEffect(pe))
+				p.removePotionEffect(pe);
+		}
+	}
+
+	public static int getRandom(int lower, int upper) {
 		Random random = new Random();
 		return random.nextInt((upper - lower) + 1) + lower;
 	}

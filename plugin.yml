@@ -10,3 +10,9 @@ commands:
   lag:
   gm:
   feast:
+  start:
+  forcetime:
+    aliases: [ftime]
+  forcefeast:
+    aliases: [ffeast]
+  

@@ -25,7 +25,7 @@ public class KitCmd implements CommandExecutor {
 				if (kitss == null)
 					kitss = k.getKitName();
 				else
-					kitss.concat(", " + k.getKitName());
+					kitss = kitss.concat(", " + k.getKitName());
 			}
 			sender.sendMessage(ChatColor.GREEN + "Your kits: §r" + kitss);
 			return false;
