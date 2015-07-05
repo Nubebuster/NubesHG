@@ -2,10 +2,6 @@ package me.Mark.HG.Listeners;
 
 import java.util.HashMap;
 
-import me.Mark.HG.Gamer;
-import me.Mark.HG.HG;
-import me.Mark.HG.Utils.Undroppable;
-
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -27,6 +23,10 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.ServerListPingEvent;
+
+import me.Mark.HG.Gamer;
+import me.Mark.HG.HG;
+import me.Mark.HG.Utils.Undroppable;
 
 public class AllTimeListener implements Listener {
 

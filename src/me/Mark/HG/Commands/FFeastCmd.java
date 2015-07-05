@@ -7,8 +7,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import me.Mark.HG.Feast;
 import me.Mark.HG.HG;
+import me.Mark.HG.Handlers.Feast;
 
 public class FFeastCmd implements CommandExecutor {
 

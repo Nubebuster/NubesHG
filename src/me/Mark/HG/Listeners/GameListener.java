@@ -75,6 +75,8 @@ public class GameListener implements Listener {
 			event.setDeathMessage(causes[r.nextInt(causes.length)]);
 		} else if (event.getDeathMessage().contains("by Ghast")) {
 			event.setDeathMessage("%p ran into the forcefield!");
+		} else if (event.getDeathMessage().contains("by Zombie")) {
+			event.setDeathMessage("%p was eaten alive! RUUUN!!!");
 		} else {
 			event.setDeathMessage(event.getDeathMessage().replace(dead.getName(), "%p"));
 		}

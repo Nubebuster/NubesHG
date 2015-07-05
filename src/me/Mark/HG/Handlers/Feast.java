@@ -1,4 +1,4 @@
-package me.Mark.HG;
+package me.Mark.HG.Handlers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
+
+import me.Mark.HG.HG;
+import me.Mark.HG.api.FeastEvent;
 
 public class Feast {
 
@@ -44,8 +47,9 @@ public class Feast {
 	public static Location createFeast(boolean forced) {
 		if (!forced && happened)
 			return null;
+		if (!happened)
+			addItems();
 		happened = true;
-		addItems();
 		int radius = 20;
 		World w = Bukkit.getServer().getWorld("world");
 		final Location loc = w.getSpawnLocation();
@@ -69,6 +73,7 @@ public class Feast {
 				}
 			}
 		}
+		Bukkit.getPluginManager().callEvent(new FeastEvent(loc));
 		if (forced) {
 			placeChests(loc);
 			return loc;

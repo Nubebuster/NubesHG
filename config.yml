@@ -1,4 +1,6 @@
 rewriteconfig: false
+#Wether the world should regenerate
+regenerate: true
 #Time the timer should start at
 pregamedelay: 180
 #Time the timer should go to when not enough players

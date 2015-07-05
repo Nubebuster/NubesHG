@@ -17,30 +17,31 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
-import me.Mark.HG.Gamer;
 import me.Mark.HG.HG;
 
 public class PreGameListener implements Listener {
 
 	@EventHandler
 	public void onBreak(BlockBreakEvent event) {
-		if (Gamer.getGamer(event.getPlayer()).isAlive())
+		if (event.getPlayer().getGameMode() == GameMode.SURVIVAL)
 			event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onPickup(PlayerPickupItemEvent event) {
-		event.setCancelled(true);
+		if (event.getPlayer().getGameMode() == GameMode.SURVIVAL)
+			event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onDrop(PlayerDropItemEvent event) {
-		event.setCancelled(true);
+		if (event.getPlayer().getGameMode() == GameMode.SURVIVAL)
+			event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onPlace(BlockPlaceEvent event) {
-		if (Gamer.getGamer(event.getPlayer()).isAlive())
+		if (event.getPlayer().getGameMode() == GameMode.SURVIVAL)
 			event.setCancelled(true);
 	}
 
@@ -48,7 +49,7 @@ public class PreGameListener implements Listener {
 	public void onDamage(EntityDamageEvent event) {
 		event.setCancelled(true);
 	}
-	
+
 	@EventHandler
 	public void onTarget(EntityTargetEvent event) {
 		event.setCancelled(true);
@@ -61,14 +62,13 @@ public class PreGameListener implements Listener {
 		HG.clearPlayer(p);
 		Random r = new Random();
 		int x = r.nextInt(100) - 50, z = r.nextInt(100) - 50;
-		p.teleport(
-				new Location(Bukkit.getWorld("world"), x, Bukkit.getWorld("world").getHighestBlockYAt(x, z) + 8, z));
+		p.teleport(new Location(Bukkit.getWorld("world"), x, Bukkit.getWorld("world").getHighestBlockYAt(x, z) + 8, z));
 		p.performCommand("kit");
 	}
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
-		if (Gamer.getGamer(event.getPlayer()).isAlive())
+		if (event.getPlayer().getGameMode() == GameMode.SURVIVAL)
 			event.setCancelled(true);
 	}
 }

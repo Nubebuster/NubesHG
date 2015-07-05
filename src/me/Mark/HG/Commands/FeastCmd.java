@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.Mark.HG.Feast;
+import me.Mark.HG.Handlers.Feast;
 
 public class FeastCmd implements CommandExecutor {
 

@@ -1,4 +1,4 @@
-package me.Mark.HG.Utils;
+package me.Mark.HG.Handlers;
 
 import java.util.Random;
 

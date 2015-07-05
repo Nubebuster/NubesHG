@@ -2,6 +2,8 @@ package me.Mark.HG;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -26,12 +28,17 @@ import me.Mark.HG.Commands.GoCmd;
 import me.Mark.HG.Commands.KitCmd;
 import me.Mark.HG.Commands.Lag;
 import me.Mark.HG.Commands.StartCmd;
+import me.Mark.HG.Handlers.Cakes;
+import me.Mark.HG.Handlers.Feast;
+import me.Mark.HG.Handlers.GenerationHandler;
 import me.Mark.HG.Kits.Kit;
 import me.Mark.HG.Listeners.AllTimeListener;
 import me.Mark.HG.Listeners.GameListener;
 import me.Mark.HG.Listeners.PreGameListener;
-import me.Mark.HG.Utils.Cakes;
 import me.Mark.HG.Utils.Undroppable;
+import me.Mark.HG.api.GameStartEvent;
+import me.Mark.HG.api.SecondEvent;
+import me.Mark.HG.api.WinEvent;
 
 /**
  * @author Mark Cockram - NubeBuster
@@ -47,9 +54,17 @@ public class HG extends JavaPlugin {
 	private int minimumPlayers, resetTime, feastTime;
 
 	@Override
-	public void onEnable() {
+	public void onLoad() {
 		HG = this;
 		configs();
+		if (config.getBoolean("regenerate"))
+			GenerationHandler.deleteWorld();
+	}
+
+	@Override
+	public void onEnable() {
+		if (config.getBoolean("regenerate"))
+			GenerationHandler.generateChunks();
 		Kit.init();
 		Bukkit.getPluginManager().registerEvents(new AllTimeListener(), this);
 		startPregameTimer();
@@ -95,6 +110,7 @@ public class HG extends JavaPlugin {
 		gameTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			@Override
 			public void run() {
+				Bukkit.getPluginManager().callEvent(new SecondEvent());
 				if (gameTime < 120) {
 					int tim = 120 - gameTime;
 					if (tim == 120 || tim == 60)
@@ -127,6 +143,7 @@ public class HG extends JavaPlugin {
 		Bukkit.getServer().broadcastMessage(ChatColor.RED + "The tournament has started!\n" + "There are " + parts
 				+ " players participating.\n" + "Everyone is invincible for 2 minutes.\n" + "Good Luck!");
 		World world = Bukkit.getWorld("world");
+		List<Player> participating = new ArrayList<Player>();
 		for (Gamer g : Gamer.getGamers()) {
 			if (g.getPlayer().getGameMode() != GameMode.SURVIVAL)
 				continue;
@@ -137,8 +154,10 @@ public class HG extends JavaPlugin {
 			g.applyKit();
 			g.getPlayer().updateInventory();
 			g.getPlayer().teleport(new Location(world, getRandom(-50, 50), 80, getRandom(-50, 50)));
+			participating.add(g.getPlayer());
 		}
 		startGameTimer();
+		Bukkit.getPluginManager().callEvent(new GameStartEvent(participating));
 	}
 
 	private Listener preListener, gameListener;
@@ -216,6 +235,7 @@ public class HG extends JavaPlugin {
 			shutdown(ChatColor.RED + "Nobody won!");
 			return;
 		}
+		Bukkit.getPluginManager().callEvent(new WinEvent(gamer));
 		HG.registerPreEvents();
 		Cakes.cakes(gamer.getPlayer());
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(HG, new Runnable() {

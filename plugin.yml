@@ -2,6 +2,8 @@ name: NubesHG
 author: NubeBuster
 version: 1.0
 main: me.Mark.HG.HG
+load: Startup
+softdepend: [TerrainControl]
 commands:
   kit:
     description: Choose what kit to play with!
