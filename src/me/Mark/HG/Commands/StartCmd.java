@@ -12,7 +12,7 @@ public class StartCmd implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.isOp()) {
+		if (!sender.hasPermission("hg.start")) {
 			sender.sendMessage(ChatColor.RED + "No permission.");
 			return false;
 		}

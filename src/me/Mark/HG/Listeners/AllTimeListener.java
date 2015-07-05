@@ -42,9 +42,9 @@ public class AllTimeListener implements Listener {
 	@EventHandler
 	public void onPing(ServerListPingEvent event) {
 		if (HG.HG.preTime > -1) {
-			event.setMotd(ChatColor.RED + "Game starting in " + HG.HG.preTime + " seconds.");
+			event.setMotd(HG.HG.motd + ChatColor.RED + "Game starting in " + HG.HG.preTime + " seconds.");
 		} else {
-			event.setMotd(ChatColor.RED + "The game has already started.");
+			event.setMotd(HG.HG.motd + ChatColor.RED + "The game has already started.");
 		}
 	}
 

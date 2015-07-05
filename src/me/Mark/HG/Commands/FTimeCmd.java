@@ -12,7 +12,7 @@ public class FTimeCmd implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.isOp()) {
+		if (!sender.hasPermission("hg.ftime")) {
 			sender.sendMessage(ChatColor.RED + "No permission.");
 			return false;
 		}

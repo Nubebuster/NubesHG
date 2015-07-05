@@ -10,7 +10,7 @@ public class GM implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.isOp() || !(sender instanceof Player))
+		if (!sender.hasPermission("hg.gm") || !(sender instanceof Player))
 			return false;
 		Player p = (Player) sender;
 		if (p.getGameMode() == GameMode.CREATIVE)

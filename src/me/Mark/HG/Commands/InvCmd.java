@@ -17,6 +17,10 @@ public class InvCmd implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "You must be a player.");
 			return false;
 		}
+		if(!sender.hasPermission("hg.inv")) {
+			sender.sendMessage(ChatColor.RED + "No permission.");
+			return false;
+		}
 		Gamer g = Gamer.getGamer((Player) sender);
 		if (g.isAlive()) {
 			sender.sendMessage(ChatColor.RED + "You must be a spectator to do this.");

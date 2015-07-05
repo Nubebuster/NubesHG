@@ -2,8 +2,33 @@ name: NubesHG
 author: NubeBuster
 version: 1.0
 main: me.Mark.HG.HG
+website: https://github.com/Nubebuster/NubesHG
 load: Startup
 softdepend: [TerrainControl]
+permissions:
+  hg.kits.*:
+    description: Gives permission to all kits
+    default: true
+  hg.kits.none:
+    default: true
+  hg.*:
+    children:
+      hg.start: true
+      hg.ftime: true
+      hg.ffeast: true
+      hg.gm: true
+      hg.inv: true
+  hg.start:
+    default: op
+  hg.ftime:
+    default: op
+  hg.ffeast:
+    default: op
+  hg.gm:
+    default: op
+  hg.inv:
+    description: Gives permission to view inventories as spectator
+    default: true
 commands:
   kit:
     description: Choose what kit to play with!
@@ -20,3 +45,4 @@ commands:
   invsee:
     aliases: [inv]
   spawn:
+  hg:

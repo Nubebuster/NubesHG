@@ -1,4 +1,6 @@
 rewriteconfig: false
+#The motd will have two lines. This one, and an info line. You may use & for colors.
+motd: '&aA &c&lNubes&b&lHG &aServer'
 #Wether the world should regenerate
 regenerate: true
 #Time the timer should start at
@@ -13,6 +15,8 @@ feast: 720
 soup: true
 #How much should soup heal?
 heals: 7
+#Wether to use the built-in kits or not
+builtin: true
 #Disabled Kits
 disabled:
  - Kangaroo

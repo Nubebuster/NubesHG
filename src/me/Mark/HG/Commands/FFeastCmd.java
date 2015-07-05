@@ -14,7 +14,7 @@ public class FFeastCmd implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (!sender.isOp()) {
+		if (!sender.hasPermission("hg.ffeast")) {
 			sender.sendMessage(ChatColor.RED + "No permission.");
 			return false;
 		}

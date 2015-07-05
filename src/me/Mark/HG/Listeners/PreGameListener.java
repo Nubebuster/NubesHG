@@ -3,6 +3,7 @@ package me.Mark.HG.Listeners;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -63,6 +64,8 @@ public class PreGameListener implements Listener {
 		Random r = new Random();
 		int x = r.nextInt(100) - 50, z = r.nextInt(100) - 50;
 		p.teleport(new Location(Bukkit.getWorld("world"), x, Bukkit.getWorld("world").getHighestBlockYAt(x, z) + 8, z));
+		p.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString()
+				+ "This server is running NubesHG made by NubeBuster. For more info use /hg");
 		p.performCommand("kit");
 	}
 

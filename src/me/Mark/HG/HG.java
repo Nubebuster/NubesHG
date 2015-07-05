@@ -26,6 +26,7 @@ import me.Mark.HG.Commands.FTimeCmd;
 import me.Mark.HG.Commands.FeastCmd;
 import me.Mark.HG.Commands.GM;
 import me.Mark.HG.Commands.GoCmd;
+import me.Mark.HG.Commands.HGCmd;
 import me.Mark.HG.Commands.InvCmd;
 import me.Mark.HG.Commands.KitCmd;
 import me.Mark.HG.Commands.Lag;
@@ -51,6 +52,7 @@ import me.Mark.HG.api.WinEvent;
 public class HG extends JavaPlugin {
 
 	public static HG HG;
+	public String motd;
 	public int preTime, gameTime = -1;
 	public FileConfiguration config;
 
@@ -60,6 +62,7 @@ public class HG extends JavaPlugin {
 	public void onLoad() {
 		HG = this;
 		configs();
+		motd = config.getString("motd").replace("&", "§") + "\n";
 		if (config.getBoolean("regenerate"))
 			GenerationHandler.deleteWorld();
 	}
@@ -192,6 +195,7 @@ public class HG extends JavaPlugin {
 		getCommand("feast").setExecutor(new FeastCmd());
 		getCommand("invsee").setExecutor(new InvCmd());
 		getCommand("spawn").setExecutor(new SpawnCmd());
+		getCommand("hg").setExecutor(new HGCmd());
 	}
 
 	private void registerEnchantments() {

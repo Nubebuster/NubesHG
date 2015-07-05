@@ -24,13 +24,23 @@ public class KitCmd implements CommandExecutor, TabCompleter {
 			return false;
 		if (args.length == 0) {
 			String kitss = null;
+			String nop = null;
 			for (Kit k : Kit.kits) {
-				if (kitss == null)
-					kitss = k.getKitName();
-				else
-					kitss = kitss.concat(", " + k.getKitName());
+				if (!(sender.hasPermission("hg.kits.*")
+						|| sender.hasPermission("hg.kits." + k.getKitName().toLowerCase()))) {
+					if (nop == null)
+						nop = k.getKitName();
+					else
+						nop = nop.concat(", " + k.getKitName());
+				} else {
+					if (kitss == null)
+						kitss = k.getKitName();
+					else
+						kitss = kitss.concat(", " + k.getKitName());
+				}
 			}
-			sender.sendMessage(ChatColor.GREEN + "Your kits: §r" + kitss);
+			sender.sendMessage(ChatColor.GREEN + "Your kits: §r" + kitss + "\n§aOther Kits: §r"
+					+ (nop == null ? "You have all kits!" : nop));
 			return false;
 		}
 		if (!(sender instanceof Player))
@@ -40,6 +50,10 @@ public class KitCmd implements CommandExecutor, TabCompleter {
 			return false;
 		}
 		String kit = args[0].toLowerCase();
+		if (!(sender.hasPermission("hg.kits.*") || sender.hasPermission("hg.kits." + kit.toLowerCase()))) {
+			sender.sendMessage(ChatColor.RED + "You don't have permission to this kit.");
+			return false;
+		}
 		Kit k = Kit.getKitFromName(kit);
 		if (k == null) {
 			sender.sendMessage(ChatColor.RED + "That kit does not exist or is disabled!");
@@ -53,12 +67,18 @@ public class KitCmd implements CommandExecutor, TabCompleter {
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 		if (args.length == 1) {
-			if (args[0].length() == 0)
-				return getKits();
+			if (args[0].length() == 0) {
+				List<String> owned = new ArrayList<String>();
+				for (String s : getKits())
+					if (sender.hasPermission("hg.kits.*") || sender.hasPermission("hg.kits." + s.toLowerCase()))
+						owned.add(s);
+				return owned;
+			}
 			List<String> pos = new ArrayList<String>();
 			for (String s : getKits())
 				if (s.toLowerCase().startsWith(args[0].toLowerCase()))
-					pos.add(s);
+					if (sender.hasPermission("hg.kits.*") || sender.hasPermission("hg.kits." + s.toLowerCase()))
+						pos.add(s);
 			return pos;
 		}
 		return null;
