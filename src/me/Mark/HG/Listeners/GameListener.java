@@ -7,6 +7,7 @@ import java.util.Random;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,17 +16,23 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.EnchantingInventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.Dye;
 
 import me.Mark.HG.Gamer;
 import me.Mark.HG.HG;
@@ -191,5 +198,39 @@ public class GameListener implements Listener {
 				}
 			}
 		}, 1200);
+	}
+
+	@EventHandler
+	public void openInventoryEvent(InventoryOpenEvent e) {
+		if (e.getInventory() instanceof EnchantingInventory) {
+			Dye d = new Dye();
+			d.setColor(DyeColor.BLUE);
+			ItemStack lapis = d.toItemStack();
+			lapis.setAmount(64);
+			e.getInventory().setItem(1, lapis);
+		}
+	}
+
+	@EventHandler
+	public void closeInventoryEvent(InventoryCloseEvent e) {
+		if (e.getInventory() instanceof EnchantingInventory)
+			e.getInventory().setItem(1, null);
+	}
+
+	@EventHandler
+	public void inventoryClickEvent(InventoryClickEvent e) {
+		if (e.getView().getTopInventory() instanceof EnchantingInventory)
+			if (e.getSlot() == 1)
+				e.setCancelled(true);
+	}
+
+	@EventHandler
+	public void enchantItemEvent(EnchantItemEvent e) {
+		Dye d = new Dye();
+		d.setColor(DyeColor.BLUE);
+		ItemStack lapis = d.toItemStack();
+		lapis.setAmount(64);
+		e.getInventory().setItem(1, lapis);
+		e.getInventory().setItem(1, lapis);
 	}
 }

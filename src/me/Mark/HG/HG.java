@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
 import org.spigotmc.Metrics;
@@ -87,6 +88,7 @@ public class HG extends JavaPlugin {
 		registerPreEvents();
 		registerCommands();
 		registerEnchantments();
+		registerRecipes();
 
 		Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Lag(), 20L, 1L);
 
@@ -324,6 +326,18 @@ public class HG extends JavaPlugin {
 			if (p.hasPotionEffect(pe))
 				p.removePotionEffect(pe);
 		}
+	}
+
+	@SuppressWarnings("deprecation")
+	private void registerRecipes() {
+		ShapelessRecipe re = new ShapelessRecipe(new ItemStack(Material.MUSHROOM_SOUP));
+		re.addIngredient(Material.BOWL);
+		re.addIngredient(Material.CACTUS);
+		ShapelessRecipe re2 = new ShapelessRecipe(new ItemStack(Material.MUSHROOM_SOUP));
+		re2.addIngredient(Material.BOWL);
+		re2.addIngredient(Material.INK_SACK, 3);
+		Bukkit.getServer().addRecipe(re);
+		Bukkit.getServer().addRecipe(re2);
 	}
 
 	public static int getRandom(int lower, int upper) {
