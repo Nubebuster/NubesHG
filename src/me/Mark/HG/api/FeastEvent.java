@@ -13,6 +13,10 @@ public class FeastEvent extends Event {
 		return handlers;
 	}
 	
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+	
 	private Location loc;
 	
 	public FeastEvent(Location loc) {

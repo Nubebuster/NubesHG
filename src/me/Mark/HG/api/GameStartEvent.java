@@ -15,12 +15,16 @@ public class GameStartEvent extends Event {
 		return handlers;
 	}
 
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
 	List<Player> participants;
-	
+
 	public GameStartEvent(List<Player> particicpants) {
 		this.participants = particicpants;
 	}
-	
+
 	public List<Player> getParticipants() {
 		return participants;
 	}

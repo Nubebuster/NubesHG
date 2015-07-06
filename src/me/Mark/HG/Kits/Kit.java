@@ -32,15 +32,35 @@ public abstract class Kit implements Listener {
 			if (!HG.HG.config.getBoolean("builtin"))
 				return;
 			registerKit(new Archer());
+			registerKit(new Boxer());
+			registerKit(new Cannibal());
+			registerKit(new Chemist());
+			registerKit(new Cultivator());
 			registerKit(new Demoman());
+			registerKit(new Digger());
+			registerKit(new Dwarf());
 			registerKit(new Endermage());
+			registerKit(new Fireman());
 			registerKit(new FisherMan());
+			registerKit(new Frosty());
+			registerKit(new Grandpa());
+			registerKit(new Jumper());
+			registerKit(new Kangaroo());
+			registerKit(new Kaya());
+			registerKit(new Lumberjack());
 			registerKit(new Miner());
 			registerKit(new Monk());
 			registerKit(new Ninja());
+			registerKit(new Poseidon());
 			registerKit(new Reaper());
+			registerKit(new Scout());
 			registerKit(new Snail());
 			registerKit(new Stomper());
+			registerKit(new Switcher());
+			registerKit(new Tank());
+			registerKit(new Thor());
+			registerKit(new Turtle());
+			registerKit(new Vampire());
 			registerKit(new Viper());
 		} catch (NameAlreadyInUseException e) {
 			e.printStackTrace();

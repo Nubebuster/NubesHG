@@ -19,4 +19,4 @@ heals: 7
 builtin: true
 #Disabled Kits
 disabled:
- - Kangaroo
+ - Kitname
