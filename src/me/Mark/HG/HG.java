@@ -163,14 +163,20 @@ public class HG extends JavaPlugin {
 		for (Gamer g : Gamer.getGamers()) {
 			if (g.getPlayer().getGameMode() != GameMode.SURVIVAL)
 				continue;
+			Player p = g.getPlayer();
 			g.setAlive(true);
-			g.getPlayer().closeInventory();
-			clearPlayer(g.getPlayer());
-			g.getPlayer().getInventory().addItem(new ItemStack(Material.COMPASS));
+			p.closeInventory();
+			clearPlayer(p);
+			p.getInventory().addItem(new ItemStack(Material.COMPASS));
+			if (g.getKit().getKitName() == "Surprise") {
+				g.setKit(Kit.kits.get(new Random().nextInt(Kit.kits.size())));
+				p.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "You got the " + g.getKit().getKitName()
+						+ " kit!");
+			}
 			g.applyKit();
-			g.getPlayer().updateInventory();
-			g.getPlayer().teleport(new Location(world, getRandom(-50, 50), 80, getRandom(-50, 50)));
-			participating.add(g.getPlayer());
+			p.updateInventory();
+			p.teleport(new Location(world, getRandom(-50, 50), 80, getRandom(-50, 50)));
+			participating.add(p);
 		}
 		startGameTimer();
 		Bukkit.getPluginManager().callEvent(new GameStartEvent(participating));

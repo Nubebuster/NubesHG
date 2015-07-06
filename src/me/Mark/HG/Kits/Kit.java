@@ -29,6 +29,7 @@ public abstract class Kit implements Listener {
 			disabled.add(s.toLowerCase());
 		try {
 			registerKit(new None());
+			registerKit(new Surprise());
 			if (!HG.HG.config.getBoolean("builtin"))
 				return;
 			registerKit(new Archer());
