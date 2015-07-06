@@ -1,6 +1,7 @@
 package me.Mark.HG;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffectType;
+import org.spigotmc.Metrics;
+import org.spigotmc.Metrics.Graph;
 
 import me.Mark.HG.Commands.FFeastCmd;
 import me.Mark.HG.Commands.FTimeCmd;
@@ -52,6 +55,7 @@ import me.Mark.HG.api.WinEvent;
 public class HG extends JavaPlugin {
 
 	public static HG HG;
+	public Metrics metrics;
 	public String motd;
 	public int preTime, gameTime = -1;
 	public FileConfiguration config;
@@ -69,6 +73,12 @@ public class HG extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		try {
+			metrics = new Metrics();
+			metrics.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		if (config.getBoolean("regenerate"))
 			GenerationHandler.generateChunks();
 		Kit.init();
@@ -164,6 +174,27 @@ public class HG extends JavaPlugin {
 		}
 		startGameTimer();
 		Bukkit.getPluginManager().callEvent(new GameStartEvent(participating));
+		logKits();
+	}
+
+	private void logKits() {
+		Graph gr = metrics.createGraph("Kits");
+		for (Kit k : Kit.kits) {
+			int chosen = 0;
+			for (Gamer g : Gamer.getGamers())
+				if (g.getKit() == k)
+					chosen++;
+			if (chosen == 0)
+				continue;
+			final int chosenf = chosen;
+			gr.addPlotter(new Metrics.Plotter(k.getKitName()) {
+				@Override
+				public int getValue() {
+					return chosenf;
+				}
+			});
+		}
+		metrics.addGraph(gr);
 	}
 
 	private Listener preListener, gameListener;
