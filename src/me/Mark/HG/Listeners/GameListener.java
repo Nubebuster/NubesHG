@@ -27,6 +27,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -198,6 +199,14 @@ public class GameListener implements Listener {
 				}
 			}
 		}, 1200);
+	}
+
+	@EventHandler
+	public void onMove(PlayerMoveEvent event) {
+		if (HG.HG.gameTime > 120)
+			return;
+		if (event.getPlayer().getFireTicks() > 0)
+			event.getPlayer().setFireTicks(0);
 	}
 
 	@EventHandler

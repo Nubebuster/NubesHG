@@ -2,7 +2,7 @@ name: NubesHG
 author: NubeBuster
 version: 1.2
 main: me.Mark.HG.HG
-website: https://github.com/Nubebuster/NubesHG
+website: https://www.spigotmc.org/resources/nubes-hunger-games.9062/
 load: Startup
 softdepend: [TerrainControl]
 permissions:

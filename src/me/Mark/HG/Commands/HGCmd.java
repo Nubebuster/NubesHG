@@ -9,7 +9,7 @@ import me.Mark.HG.HG;
 
 /**
  * @author Mark Cockram - NubeBuster. 
- * Removing this class will disobey the
+ * Removing or disabling this class will disobey the
  *         License!
  */
 public class HGCmd implements CommandExecutor {
