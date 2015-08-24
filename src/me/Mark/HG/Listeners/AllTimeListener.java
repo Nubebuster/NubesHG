@@ -1,5 +1,6 @@
 package me.Mark.HG.Listeners;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -29,6 +30,7 @@ import org.bukkit.event.server.ServerListPingEvent;
 
 import me.Mark.HG.Gamer;
 import me.Mark.HG.HG;
+import me.Mark.HG.Data.MySQL;
 import me.Mark.HG.Utils.Undroppable;
 
 public class AllTimeListener implements Listener {
@@ -110,12 +112,22 @@ public class AllTimeListener implements Listener {
 			g.remove();
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		Gamer g = Gamer.getGamer(event.getPlayer());
-		if (HG.HG.gameTime > -1 && !g.isAlive()) {
+		Player p = event.getPlayer();
+		Gamer g = Gamer.getGamer(p);
+		if (HG.HG.gameTime > -1 && !g.isAlive())
 			event.getPlayer().setGameMode(GameMode.CREATIVE);
-		}
+		Bukkit.getScheduler().scheduleAsyncDelayedTask(HG.HG, new Runnable() {
+			public void run() {
+				try {
+					MySQL.updateName(p.getUniqueId(), p.getName());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	HashMap<String, Long> ffc = new HashMap<String, Long>();

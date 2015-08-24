@@ -3,6 +3,7 @@ package me.Mark.HG;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -36,6 +37,7 @@ import me.Mark.HG.Commands.KitCmd;
 import me.Mark.HG.Commands.Lag;
 import me.Mark.HG.Commands.SpawnCmd;
 import me.Mark.HG.Commands.StartCmd;
+import me.Mark.HG.Data.MySQL;
 import me.Mark.HG.Handlers.Cakes;
 import me.Mark.HG.Handlers.Feast;
 import me.Mark.HG.Handlers.GenerationHandler;
@@ -94,6 +96,19 @@ public class HG extends JavaPlugin {
 
 		for (Player p : Bukkit.getOnlinePlayers())
 			Gamer.getGamer(p);
+
+		if (config.getBoolean("mysql"))
+			try {
+				MySQL.openConnection(config.getString("host"), config.getInt("port"), config.getString("database"),
+						config.getString("table"), config.getString("user"), config.getString("password"));
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+	}
+
+	@Override
+	public void onDisable() {
+		MySQL.closeConnection();
 	}
 
 	@SuppressWarnings("unused")
@@ -280,6 +295,7 @@ public class HG extends JavaPlugin {
 		return players;
 	}
 
+	@SuppressWarnings("deprecation")
 	private static void winner(final Gamer gamer) {
 		if (gamer == null) {
 			shutdown(ChatColor.RED + "Nobody won!");
@@ -288,6 +304,15 @@ public class HG extends JavaPlugin {
 		Bukkit.getPluginManager().callEvent(new WinEvent(gamer));
 		HG.registerPreEvents();
 		Cakes.cakes(gamer.getPlayer());
+		Bukkit.getScheduler().scheduleAsyncDelayedTask(HG, new Runnable() {
+			public void run() {
+				try {
+					MySQL.incrementStat(gamer.getPlayer().getUniqueId(), "wins");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(HG, new Runnable() {
 			@Override
 			public void run() {

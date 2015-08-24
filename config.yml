@@ -1,7 +1,7 @@
 rewriteconfig: false
 #The motd will have two lines. This one, and an info line. You may use & for colors.
 motd: '&aA &c&lNubes&b&lHG &aServer'
-#Wether the world should regenerate
+#Whether the world should regenerate
 regenerate: true
 #Time the timer should start at
 pregamedelay: 180
@@ -20,3 +20,12 @@ builtin: true
 #Disabled Kits
 disabled:
  - Kitname
+
+#Whether to use mysql or not - this is currently the only option for saving statistics
+mysql: false
+host: '127.0.0.1'
+port: 3306
+database: 'db_name'
+table: 'HG'
+user: 'Bob'
+password: 'IlluminatiConfirmed'

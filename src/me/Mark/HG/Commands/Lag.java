@@ -10,8 +10,7 @@ import org.bukkit.command.CommandSender;
 public class Lag implements Runnable, CommandExecutor {
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command arg1, String label,
-			String[] args) {
+	public boolean onCommand(CommandSender sender, Command arg1, String label, String[] args) {
 		double tps = doubleRoundTo2Decimals(getTPS());
 		int lag = (int) Math.round((20 - tps) / 20 * 100);
 		if (tps > 19.9)

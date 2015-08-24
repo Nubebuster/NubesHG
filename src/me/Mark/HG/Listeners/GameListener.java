@@ -1,5 +1,6 @@
 package me.Mark.HG.Listeners;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,6 +38,7 @@ import org.bukkit.material.Dye;
 
 import me.Mark.HG.Gamer;
 import me.Mark.HG.HG;
+import me.Mark.HG.Data.MySQL;
 import me.Mark.HG.Utils.Undroppable;
 
 public class GameListener implements Listener {
@@ -55,6 +57,7 @@ public class GameListener implements Listener {
 
 	private Random r = new Random();
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
 		Player dead = event.getEntity();
@@ -75,6 +78,15 @@ public class GameListener implements Listener {
 				event.setDeathMessage("%p entered their next life, courtesy of " + killname + "'s " + weapon);
 			else
 				event.setDeathMessage("%p was killed by " + killname + " with a " + weapon);
+			Bukkit.getScheduler().scheduleAsyncDelayedTask(HG.HG, new Runnable() {
+				public void run() {
+					try {
+						MySQL.incrementStat(killer.getUniqueId(), "kills");
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			});
 		} else if (cause == DamageCause.FALL) {
 			event.setDeathMessage(r.nextBoolean() ? "%p fell to their death" : "%p fell really far");
 		} else if (cause == DamageCause.BLOCK_EXPLOSION || cause == DamageCause.ENTITY_EXPLOSION) {
@@ -93,6 +105,15 @@ public class GameListener implements Listener {
 				+ event.getDeathMessage().replace("%p",
 						dead.getName() + "(" + Gamer.getGamer(dead).getKit().getKitName() + ")")
 				+ ".\n" + HG.check() + " players remaining.");
+		Bukkit.getScheduler().scheduleAsyncDelayedTask(HG.HG, new Runnable() {
+			public void run() {
+				try {
+					MySQL.incrementStat(dead.getUniqueId(), "deaths");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	@SuppressWarnings("deprecation")
