@@ -1,7 +1,6 @@
 package me.Mark.HG;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionEffect;
 import org.spigotmc.Metrics;
 import org.spigotmc.Metrics.Graph;
 
@@ -79,7 +78,7 @@ public class HG extends JavaPlugin {
 		try {
 			metrics = new Metrics();
 			metrics.start();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if (config.getBoolean("regenerate"))
@@ -345,12 +344,8 @@ public class HG extends JavaPlugin {
 		p.setFallDistance(0.0F);
 		p.setLevel(0);
 		p.setExp(0);
-		for (PotionEffectType pe : PotionEffectType.values()) {
-			if (pe == null)
-				continue;
-			if (p.hasPotionEffect(pe))
-				p.removePotionEffect(pe);
-		}
+		for (PotionEffect pe : p.getActivePotionEffects())
+			p.removePotionEffect(pe.getType());
 	}
 
 	@SuppressWarnings("deprecation")

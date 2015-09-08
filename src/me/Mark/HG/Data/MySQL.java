@@ -21,6 +21,15 @@ public class MySQL {
 		Class.forName("com.mysql.jdbc.Driver");
 		con = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, user, password);
 		MySQL.table = table;
+
+		PreparedStatement ss = con.prepareStatement("SHOW TABLES");
+		ResultSet r = ss.executeQuery();
+		if (!r.next()) {
+			PreparedStatement s = con.prepareStatement("CREATE TABLE `hg` (`uuid` varchar(36) NOT NULL,"
+					+ "`name` varchar(16) NOT NULL,`kills` int(11) NOT NULL,"
+					+ "`deaths` int(11) NOT NULL,`wins` int(11) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8");
+			s.execute();
+		}
 	}
 
 	public static void closeConnection() {
