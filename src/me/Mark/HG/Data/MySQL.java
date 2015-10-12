@@ -13,19 +13,30 @@ import org.bukkit.entity.Player;
 public class MySQL {
 
 	private static Connection con;
-
 	private static String table;
 
-	public static void openConnection(String hostname, int port, String database, String table, String user,
-			String password) throws SQLException, ClassNotFoundException {
-		Class.forName("com.mysql.jdbc.Driver");
-		con = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, user, password);
-		MySQL.table = table;
+	private static String hostname, database, user, password;
+	private static int port;
 
+	public static void initialize(String hostname, int port, String database, String table, String user,
+			String password) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.jdbc.Driver");
+		MySQL.table = table;
+		MySQL.hostname = hostname;
+		MySQL.database = database;
+		MySQL.user = user;
+		MySQL.password = password;
+		MySQL.port = port;
+	}
+
+	public static void openConnection() throws SQLException, ClassNotFoundException {
+		closeConnection();// close existing connection if exists
+		con = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, user, password);
+		con.prepareStatement("USE " + table).execute();
 		PreparedStatement ss = con.prepareStatement("SHOW TABLES");
 		ResultSet r = ss.executeQuery();
 		if (!r.next()) {
-			PreparedStatement s = con.prepareStatement("CREATE TABLE `hg` (`uuid` varchar(36) NOT NULL,"
+			PreparedStatement s = con.prepareStatement("CREATE TABLE IF NOT EXISTS `hg` (`uuid` varchar(36) NOT NULL,"
 					+ "`name` varchar(16) NOT NULL,`kills` int(11) NOT NULL,"
 					+ "`deaths` int(11) NOT NULL,`wins` int(11) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 			s.execute();
@@ -41,8 +52,18 @@ public class MySQL {
 		}
 	}
 
+	public static void checkConnection() {
+		try {
+			if (con == null || !con.isValid(0))
+				openConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Deprecated
 	public static synchronized void incrementStat(UUID id, String statname) throws SQLException {
+		checkConnection();
 		checkDataContainsPlayer(id);
 		PreparedStatement s = con
 				.prepareStatement("UPDATE `" + table + "` SET " + statname + "=" + statname + "+1 WHERE uuid=?;");
@@ -61,6 +82,7 @@ public class MySQL {
 	// uuid, lastname, deaths, kills, wins
 
 	private synchronized static void insertNewPlayer(UUID id) throws SQLException {
+		checkConnection();
 		PreparedStatement s = con.prepareStatement("INSERT INTO `" + table + "` values(?, ?, 0, 0, 0);");
 		s.setString(1, id.toString());
 		Player p = Bukkit.getPlayer(id);
@@ -73,6 +95,7 @@ public class MySQL {
 
 	@Deprecated
 	public static synchronized void updateName(UUID id, String name) throws SQLException {
+		checkConnection();
 		PreparedStatement s = con.prepareStatement("UPDATE `" + table + "` SET name=? WHERE uuid=?;");
 		s.setString(1, name);
 		s.setString(2, id.toString());
