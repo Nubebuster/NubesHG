@@ -27,6 +27,7 @@ public class MySQL {
 		MySQL.user = user;
 		MySQL.password = password;
 		MySQL.port = port;
+		openConnection();
 	}
 
 	public static void openConnection() throws SQLException, ClassNotFoundException {

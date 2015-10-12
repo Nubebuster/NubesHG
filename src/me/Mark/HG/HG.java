@@ -98,7 +98,7 @@ public class HG extends JavaPlugin {
 
 		if (config.getBoolean("mysql"))
 			try {
-				MySQL.openConnection(config.getString("host"), config.getInt("port"), config.getString("database"),
+				MySQL.initialize(config.getString("host"), config.getInt("port"), config.getString("database"),
 						config.getString("table"), config.getString("user"), config.getString("password"));
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
