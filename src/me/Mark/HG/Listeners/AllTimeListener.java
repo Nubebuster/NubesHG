@@ -168,13 +168,14 @@ public class AllTimeListener implements Listener {
 	public void onInteract(PlayerInteractEvent event) {
 		Player p = event.getPlayer();
 		if (p.getInventory().getItemInHand().getType() == Material.COMPASS) {
-			if (getNearest(p) == null) {
+			Player nearest = getNearest(p);
+			if (nearest == null) {
 				p.setCompassTarget(p.getWorld().getSpawnLocation());
 				p.sendMessage(ChatColor.RED + "No valid targets found, compass pointing toward spawn.");
 				return;
 			}
-			p.setCompassTarget(getNearest(p).getLocation());
-			p.sendMessage(ChatColor.YELLOW + "Compass pointing at " + getNearest(p).getName());
+			p.setCompassTarget(nearest.getLocation());
+			p.sendMessage(ChatColor.YELLOW + "Compass pointing at " + nearest.getName());
 		}
 	}
 
