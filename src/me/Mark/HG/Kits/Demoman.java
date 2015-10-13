@@ -63,6 +63,7 @@ public class Demoman extends Kit {
 		Location ex = b.getRelative(BlockFace.UP).getLocation();
 		if (b.getType() == Material.STONE_PLATE && traps.contains(b)) {
 			traps.remove(b);
+			b.setType(Material.AIR);
 			b.getWorld().createExplosion(ex, 5F);
 		}
 	}
