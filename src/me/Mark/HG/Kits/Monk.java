@@ -31,7 +31,7 @@ public class Monk extends Kit {
 				|| !(event.getRightClicked() instanceof Player))
 			return;
 		Player vic = (Player) event.getRightClicked();
-		if (cooldowns.get(vic.getName()) > System.currentTimeMillis()) {
+		if (cooldowns.containsKey(vic.getName()) && cooldowns.get(vic.getName()) > System.currentTimeMillis()) {
 			p.sendMessage(ChatColor.BOLD + "You can't monk them again yet!");
 			return;
 		}
