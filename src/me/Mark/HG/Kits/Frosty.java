@@ -54,7 +54,7 @@ public class Frosty extends Kit {
 		}
 		if (hitBlock.getType() == Material.LONG_GRASS)
 			hitBlock.setType(Material.ICE);
-		else
+		else if (hitBlock.getRelative(BlockFace.UP).getType() == Material.AIR)
 			hitBlock.getRelative(BlockFace.UP).setType(Material.SNOW);
 		Location l = hitBlock.getLocation();
 		int range = 40;
