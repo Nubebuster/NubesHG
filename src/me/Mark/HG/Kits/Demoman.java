@@ -67,4 +67,27 @@ public class Demoman extends Kit {
 			b.getWorld().createExplosion(ex, 5F);
 		}
 	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.STONE_PLATE, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you place a stone pressure plate over gravel");
+		list.add(" it turns into a landmine!");
+		list.add("Do not step on your own pressure plate!");
+		list.add("You can cook stone and dig new gravel");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("8 Gravel");
+		list.add("8 Stone Pressure Plates");
+		return list;
+	}
 }

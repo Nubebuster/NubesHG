@@ -157,4 +157,26 @@ public class Endermage extends Kit {
 	public ItemStack[] getItems() {
 		return new ItemStack[] { createItem(Material.ENDER_PORTAL_FRAME, "§lPortal", false) };
 	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.ENDER_PORTAL_FRAME, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you place your portal any players");
+		list.add(" within 5 blocks away from you on any height");
+		list.add(" will be teleported to you");
+		list.add("Portal stays for 5 seconds or untill teleport");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("1 Portal");
+		return list;
+	}
 }

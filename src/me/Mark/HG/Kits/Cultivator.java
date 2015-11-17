@@ -1,5 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.CropState;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
@@ -47,5 +50,23 @@ public class Cultivator extends Kit {
 	@Override
 	public ItemStack[] getItems() {
 		return null;
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.WHEAT, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("Saplings or Seeds grow instantly as you place them");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		return list;
 	}
 }

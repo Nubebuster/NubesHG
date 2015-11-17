@@ -80,4 +80,24 @@ public class Switcher extends Kit {
 				is.setType(Material.AIR);
 			}
 	}
+	
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.SNOW_BALL, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you hit someone with your snowball");
+		list.add(" you switch places");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("10 Snowballs");
+		return list;
+	}
 }

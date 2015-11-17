@@ -45,6 +45,7 @@ public abstract class Kit implements Listener {
 			registerKit(new FisherMan());
 			registerKit(new Frosty());
 			registerKit(new Grandpa());
+			registerKit(new Gravedigger());
 			registerKit(new Jumper());
 			registerKit(new Kangaroo());
 			registerKit(new Kaya());
@@ -90,6 +91,28 @@ public abstract class Kit implements Listener {
 
 	public abstract ItemStack[] getItems();
 
+	protected abstract ItemStack getIcon();
+
+	protected abstract List<String> getDescription();
+
+	protected abstract List<String> getStartingItems();
+
+	private ItemStack getFromDetails(ItemStack item, List<String> lores) {
+		ItemMeta im = item.getItemMeta();
+		if (getStartingItems().isEmpty())
+			lores.add("No starting items.");
+		else
+			lores.add("You start with: " + getStartingItems().toString());
+		im.setLore(lores);
+		im.setDisplayName(getKitName());
+		item.setItemMeta(im);
+		return item;
+	}
+
+	public ItemStack getIconItem() {
+		return getFromDetails(getIcon(), getDescription());
+	}
+
 	protected boolean hasAbillity(Player p) {
 		return Gamer.getGamer(p).getKit() == this;
 	}
@@ -112,5 +135,9 @@ public abstract class Kit implements Listener {
 		if (!droppable)
 			is.addUnsafeEnchantment(Undroppable.ench, 1);
 		return is;
+	}
+
+	protected static List<String> getNewStringList() {
+		return new ArrayList<String>();
 	}
 }

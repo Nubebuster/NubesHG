@@ -1,5 +1,9 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,5 +37,25 @@ public class Poseidon extends Kit {
 				event.getPlayer().setRemainingAir(200);
 			}
 		}
+	}
+	
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.WATER, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you are in water, you get");
+		list.add(" Strength II and Speed II");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		return list;
 	}
 }

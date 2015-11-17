@@ -1,9 +1,12 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -61,6 +64,25 @@ public class Ninja extends Kit {
 		}
 	}
 
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.FEATHER, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("If you sneak within 10 seconds");
+		list.add(" after hitting someone,");
+		list.add(" you will be teleported to them");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		return list;
+	}
 }
 
 class Pair {

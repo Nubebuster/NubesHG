@@ -1,5 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.List;
+
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -29,5 +32,23 @@ public class Boxer extends Kit {
 	@Override
 	public ItemStack[] getItems() {
 		return null;
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.STONE_SWORD, getKitName(), true);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = getNewStringList();
+		list.add("Your fist deals the same amount of damage as a stone sword");
+		list.add("All sword damage you get is reduced by 1hp");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		return getNewStringList();
 	}
 }

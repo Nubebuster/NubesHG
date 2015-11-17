@@ -1,5 +1,6 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class Thor extends Kit {
 
 	@Override
 	public ItemStack[] getItems() {
-		ItemStack axe = new ItemStack(Material.WOOD_AXE);
+		ItemStack axe = createItem(Material.WOOD_AXE, "§lThor's Hammer", false);
 		return new ItemStack[] { axe };
 	}
 
@@ -96,5 +97,28 @@ public class Thor extends Kit {
 		TNTPrimed tnt = (TNTPrimed) loc.getWorld().spawn(loc, TNTPrimed.class);
 		tnt.setFuseTicks(0);
 		tnt.setYield(2.0F);
+	}
+	
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.BOW, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you click with your hammer on the ground");
+		list.add(" there strikes a lighting bolt and deals 2 hearts");
+		list.add("If the highest block on the location is above y=80");
+		list.add("Netherrack appears. Another strike will make the ");
+		list.add(" rack explode! You can build up more rack");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("1 Thor's Hammer");
+		return list;
 	}
 }

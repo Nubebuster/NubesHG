@@ -1,5 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
@@ -75,10 +78,30 @@ public class Archer extends Kit {
 	}
 
 	public ItemStack[] getItems() {
-		ItemStack bow = createItem(Material.BOW, "§lBow", false);
+		ItemStack bow = createItem(Material.BOW, getKitName(), false);
 		bow.addEnchantment(Enchantment.ARROW_KNOCKBACK, 1);
 
 		ItemStack[] items = new ItemStack[] { bow, new ItemStack(Material.ARROW, 10) };
 		return items;
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.BOW, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you hit your target, you get a new arrow");
+		list.add("Your bow has Punch I");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("1 Bow");
+		return list;
 	}
 }

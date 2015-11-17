@@ -1,5 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -28,5 +31,26 @@ public class Lumberjack extends Kit {
 				b = b.getRelative(BlockFace.UP);
 			}
 		}
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.LOG, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you break a log, all logs above");
+		list.add(" break and drop too");
+		list.add("You can make big traps/buildings with this");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("1 Wooden Axe");
+		return list;
 	}
 }

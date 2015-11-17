@@ -1,6 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -76,7 +78,7 @@ public class Kaya extends Kit {
 	@EventHandler
 	public void onMove(PlayerMoveEvent event) {
 		Player p = event.getPlayer();
-		if (p.getGameMode() == GameMode.SURVIVAL) {
+		if (p.getGameMode() == GameMode.SURVIVAL && !hasAbillity(p)) {
 			Location loc = event.getPlayer().getLocation();
 			for (int z = -this.distanceFromBlocks; z <= this.distanceFromBlocks; z++)
 				for (int x = -this.distanceFromBlocks; x <= this.distanceFromBlocks; x++)
@@ -96,5 +98,27 @@ public class Kaya extends Kit {
 		Player p = event.getPlayer();
 		if ((!event.isCancelled()) && (event.getBlock().getType() == Material.GRASS) && hasAbillity(p))
 			this.kayaBlocks.put(event.getBlock(), event.getPlayer().getName());
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.GRASS, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("Grass Blocks you place disappear when");
+		list.add(" someone comes close to them");
+		list.add("You can craft new grass with seeds and ");
+		list.add(" dirt");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("10 Grass Blocks");
+		return list;
 	}
 }

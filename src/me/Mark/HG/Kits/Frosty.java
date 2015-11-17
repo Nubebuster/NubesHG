@@ -1,5 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -79,5 +82,27 @@ public class Frosty extends Kit {
 		event.getBlock().setType(Material.AIR);
 		event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation().add(0.5D, 0D, 0.5D),
 				new ItemStack(Material.SNOW_BALL, 2));
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.BOW, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("You get Speed II when you walk over snow");
+		list.add("When you throw a snowball, a layer of");
+		list.add(" snow lands on it's spot");
+		list.add("When you break snow you get 2 snowballs");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("10 Snowballs");
+		return list;
 	}
 }

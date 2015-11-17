@@ -1,9 +1,12 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -65,5 +68,27 @@ public class Dwarf extends Kit {
 				p.sendMessage(ChatColor.GREEN + "Dwarf load: " + sneakingTime / 100L + "%");
 			}
 		}
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.WOOD_AXE, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you sneak, you charge up for a launch!");
+		list.add("Sneak for 5 seconds to chargy fully");
+		list.add(" and when you release, any players within 2.5 blocks");
+		list.add(" will be launched into the sky");
+		list.add("Victims can sneak to not get launched");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		return list;
 	}
 }

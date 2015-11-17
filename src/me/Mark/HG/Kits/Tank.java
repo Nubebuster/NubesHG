@@ -1,5 +1,9 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -35,5 +39,27 @@ public class Tank extends Kit {
 			if (hasAbillity(p))
 				event.setCancelled(true);
 		}
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.TNT, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you kill someone, there is an explosion");
+		list.add("This could kill their teammates");
+		list.add("You do not get damage from explosions");
+		list.add("Explosions include Demoman explosions");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("1 Bow");
+		return list;
 	}
 }

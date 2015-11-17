@@ -1,5 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -49,5 +52,25 @@ public class Digger extends Kit {
 		ItemStack egg = createItem(Material.DRAGON_EGG, "§lDragon Egg", false);
 		egg.setAmount(6);
 		return new ItemStack[] { egg };
+	}
+	
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.DRAGON_EGG, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you place a dragon egg, it creates a 5*4*5 hole beneath");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("6 Dragon Eggs");
+		return list;
 	}
 }

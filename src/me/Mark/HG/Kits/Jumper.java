@@ -1,5 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -28,5 +31,24 @@ public class Jumper extends Kit {
 				event.getPlayer().teleport(event.getTo());
 				event.getPlayer().setFallDistance(0f);
 			}
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.ENDER_PEARL, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("Ender Pearls do no damage to you");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("6 Ender Pearls");
+		return list;
 	}
 }

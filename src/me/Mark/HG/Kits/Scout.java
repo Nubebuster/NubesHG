@@ -1,6 +1,10 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
@@ -19,7 +23,7 @@ public class Scout extends Kit {
 
 	@EventHandler
 	public void onSec(SecondEvent event) {
-		if (HG.HG.gameTime % 600 == 0)
+		if (HG.HG.gameTime % 240 == 0)
 			for (Gamer g : Gamer.getGamers())
 				if (g.getKit() == this) {
 					g.getPlayer().getInventory().addItem(getItemss());
@@ -38,5 +42,24 @@ public class Scout extends Kit {
 	@Override
 	public ItemStack[] getItems() {
 		return null;
+	}
+	
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.FEATHER, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("You get a new batch of potions every 4 minutes");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("2 Potions of Swiftness II");
+		return list;
 	}
 }

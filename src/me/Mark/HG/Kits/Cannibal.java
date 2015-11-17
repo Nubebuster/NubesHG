@@ -1,5 +1,7 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Material;
@@ -27,7 +29,7 @@ public class Cannibal extends Kit {
 				}
 				Player damaged = (Player) event.getEntity();
 				if (new Random().nextInt(3) == 1)
-					damaged.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 0), true);
+					damaged.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 120, 0), true);
 				if (damager.getFoodLevel() < 20) {
 					damager.setFoodLevel(damager.getFoodLevel() + 2);
 					if (damaged.getFoodLevel() > 1)
@@ -47,5 +49,26 @@ public class Cannibal extends Kit {
 	@Override
 	public String getKitName() {
 		return "Cannibal";
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.FERMENTED_SPIDER_EYE, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("You start with a cat egg and a fish to tame your own cat");
+		list.add("If you hit someone, there is a 1/3 chance they het Starvation II for 6 seconds");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("1 Cat Spawn Egg");
+		list.add("1 Raw Fish");
+		return list;
 	}
 }

@@ -1,5 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -49,5 +52,24 @@ public class Turtle extends Kit {
 					event.setCancelled(true);
 				}
 		}
+	}
+	
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.CAKE, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you sneak you can not take more");
+		list.add(" damage than .5 hearts per hit");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		return list;
 	}
 }

@@ -1,6 +1,7 @@
 package me.Mark.HG.Kits;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -80,5 +81,26 @@ public class Kangaroo extends Kit {
 				if (event.getDamage() >= 7)
 					event.setDamage(7);
 		}
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.FIREWORK, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you click your firework you");
+		list.add(" get a small launch");
+		list.add("Next launch is possible after landing");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("1 Firework");
+		return list;
 	}
 }

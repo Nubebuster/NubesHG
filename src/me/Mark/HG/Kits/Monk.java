@@ -1,6 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -42,5 +44,27 @@ public class Monk extends Kit {
 		inv.setItem(slot, heldis);
 		p.sendMessage(ChatColor.YELLOW + "Monked!");
 		cooldowns.put(vic.getName(), System.currentTimeMillis() + 60000);
+	}
+
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.BLAZE_ROD, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("When you hit your opponent with your");
+		list.add(" magic wand, the item in their hand");
+		list.add(" is replaced with a random item in");
+		list.add(" their inventory");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("1 Magic Wand");
+		return list;
 	}
 }

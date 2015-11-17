@@ -1,5 +1,8 @@
 package me.Mark.HG.Kits;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -17,6 +20,26 @@ public class Miner extends Kit {
 		is.addEnchantment(Enchantment.DIG_SPEED, 2);
 		is.addEnchantment(Enchantment.DURABILITY, 2);
 		return new ItemStack[] { is, new ItemStack(Material.APPLE, 5) };
+	}
+	
+	@Override
+	protected ItemStack getIcon() {
+		return createItem(Material.STONE_PICKAXE, getKitName(), false);
+	}
+
+	@Override
+	protected List<String> getDescription() {
+		List<String> list = new ArrayList<String>();
+		list.add("You can start mining quickly");
+		return list;
+	}
+
+	@Override
+	protected List<String> getStartingItems() {
+		List<String> list = getNewStringList();
+		list.add("1 Stone Pickaxe with Efficiency II");
+		list.add(" Unbreaking II");
+		return list;
 	}
 
 /*	@EventHandler
