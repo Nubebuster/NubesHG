@@ -9,7 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.nubebuster.hg.Kits.Kit;
+import com.nubebuster.hg.kits.Kit;
 
 public class Gamer {
 

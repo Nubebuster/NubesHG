@@ -33,16 +33,27 @@ commands:
   kit:
     description: Choose what kit to play with!
     aliases: [class]
-  go:
+  spectate:
+    description: Spectate a player
+    aliases: [go, spec]
   lag:
+    description: Displays the ticks per second in the last 5 seconds
   gm:
+    description: Toggle between gamemode CREATIVE and SURVIVAL
   feast:
+    description: Point your compass to the feast
   start:
+    description: Force the game to start
   forcetime:
+    description: Force the game time
     aliases: [ftime]
   forcefeast:
+    description: Force the feast to start
     aliases: [ffeast]
   invsee:
+    description: Show someone's inventory
     aliases: [inv]
   spawn:
+    description: Teleport to a random location in the game to make up a plan
   hg:
+    description: Displays information about the plugin

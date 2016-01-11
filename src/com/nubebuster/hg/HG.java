@@ -25,29 +25,29 @@ import org.bukkit.potion.PotionEffect;
 import org.spigotmc.Metrics;
 import org.spigotmc.Metrics.Graph;
 
-import com.nubebuster.hg.Commands.FFeastCmd;
-import com.nubebuster.hg.Commands.FTimeCmd;
-import com.nubebuster.hg.Commands.FeastCmd;
-import com.nubebuster.hg.Commands.GM;
-import com.nubebuster.hg.Commands.GoCmd;
-import com.nubebuster.hg.Commands.HGCmd;
-import com.nubebuster.hg.Commands.InvCmd;
-import com.nubebuster.hg.Commands.KitCmd;
-import com.nubebuster.hg.Commands.Lag;
-import com.nubebuster.hg.Commands.SpawnCmd;
-import com.nubebuster.hg.Commands.StartCmd;
-import com.nubebuster.hg.Data.MySQL;
-import com.nubebuster.hg.Handlers.Cakes;
-import com.nubebuster.hg.Handlers.Feast;
-import com.nubebuster.hg.Handlers.GenerationHandler;
-import com.nubebuster.hg.Kits.Kit;
-import com.nubebuster.hg.Listeners.AllTimeListener;
-import com.nubebuster.hg.Listeners.GameListener;
-import com.nubebuster.hg.Listeners.PreGameListener;
-import com.nubebuster.hg.Utils.Undroppable;
 import com.nubebuster.hg.api.GameStartEvent;
 import com.nubebuster.hg.api.SecondEvent;
 import com.nubebuster.hg.api.WinEvent;
+import com.nubebuster.hg.commands.FFeastCmd;
+import com.nubebuster.hg.commands.FTimeCmd;
+import com.nubebuster.hg.commands.FeastCmd;
+import com.nubebuster.hg.commands.GM;
+import com.nubebuster.hg.commands.SpectateCmd;
+import com.nubebuster.hg.commands.HGCmd;
+import com.nubebuster.hg.commands.InvCmd;
+import com.nubebuster.hg.commands.KitCmd;
+import com.nubebuster.hg.commands.Lag;
+import com.nubebuster.hg.commands.SpawnCmd;
+import com.nubebuster.hg.commands.StartCmd;
+import com.nubebuster.hg.data.MySQL;
+import com.nubebuster.hg.handlers.Cakes;
+import com.nubebuster.hg.handlers.Feast;
+import com.nubebuster.hg.handlers.GenerationHandler;
+import com.nubebuster.hg.kits.Kit;
+import com.nubebuster.hg.listeners.AllTimeListener;
+import com.nubebuster.hg.listeners.GameListener;
+import com.nubebuster.hg.listeners.PreGameListener;
+import com.nubebuster.hg.utils.Undroppable;
 
 /**
  * @author Mark Cockram - NubeBuster
@@ -239,7 +239,7 @@ public class HG extends JavaPlugin {
 
 	private void registerCommands() {
 		getCommand("kit").setExecutor(new KitCmd());
-		getCommand("go").setExecutor(new GoCmd());
+		getCommand("spectate").setExecutor(new SpectateCmd());
 		getCommand("lag").setExecutor(new Lag());
 		getCommand("gm").setExecutor(new GM());
 		getCommand("start").setExecutor(new StartCmd());

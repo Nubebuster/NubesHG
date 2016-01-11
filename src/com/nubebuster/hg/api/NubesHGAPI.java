@@ -1,7 +1,7 @@
 package com.nubebuster.hg.api;
 
-import com.nubebuster.hg.Kits.Kit;
-import com.nubebuster.hg.Utils.NameAlreadyInUseException;
+import com.nubebuster.hg.kits.Kit;
+import com.nubebuster.hg.utils.NameAlreadyInUseException;
 
 public class NubesHGAPI {
 

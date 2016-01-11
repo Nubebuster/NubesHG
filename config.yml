@@ -3,7 +3,7 @@ rewriteconfig: false
 motd: '&aA &c&lNubes&b&lHG &aServer'
 #Whether the world should regenerate
 regenerate: true
-#Time the timer should start at
+#Time the timer should count down from before the game starts
 pregamedelay: 180
 #Time the timer should go to when not enough players
 retime: 120
