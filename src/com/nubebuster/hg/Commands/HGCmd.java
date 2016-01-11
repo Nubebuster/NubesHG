@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Commands;
+package com.nubebuster.hg.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

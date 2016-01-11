@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Commands;
+package com.nubebuster.hg.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.nubebuster.hg.Handlers.Feast;
+import com.nubebuster.hg.handlers.Feast;
 
 public class FeastCmd implements CommandExecutor {
 

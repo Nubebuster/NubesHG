@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Handlers;
+package com.nubebuster.hg.handlers;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
 
 import com.nubebuster.hg.HG;
-import com.nubebuster.hg.Utils.DataPair;
+import com.nubebuster.hg.utils.DataPair;
 
 import net.minecraft.server.v1_8_R3.ChunkProviderServer;
 import net.minecraft.server.v1_8_R3.WorldServer;

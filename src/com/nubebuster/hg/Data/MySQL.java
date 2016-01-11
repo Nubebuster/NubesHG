@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Data;
+package com.nubebuster.hg.data;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

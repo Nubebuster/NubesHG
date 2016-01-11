@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Kits;
+package com.nubebuster.hg.kits;
 
 import java.util.ArrayList;
 import java.util.HashMap;

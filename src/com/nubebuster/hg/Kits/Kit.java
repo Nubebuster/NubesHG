@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Kits;
+package com.nubebuster.hg.kits;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.nubebuster.hg.Gamer;
 import com.nubebuster.hg.HG;
-import com.nubebuster.hg.Utils.NameAlreadyInUseException;
-import com.nubebuster.hg.Utils.Undroppable;
+import com.nubebuster.hg.utils.NameAlreadyInUseException;
+import com.nubebuster.hg.utils.Undroppable;
 
 public abstract class Kit implements Listener {
 

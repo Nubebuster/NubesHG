@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Handlers;
+package com.nubebuster.hg.handlers;
 
 import java.util.ArrayList;
 import java.util.List;

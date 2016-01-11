@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Utils;
+package com.nubebuster.hg.utils;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;

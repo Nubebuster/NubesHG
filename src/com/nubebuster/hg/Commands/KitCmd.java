@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Commands;
+package com.nubebuster.hg.commands;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 
 import com.nubebuster.hg.Gamer;
 import com.nubebuster.hg.HG;
-import com.nubebuster.hg.Kits.Kit;
+import com.nubebuster.hg.kits.Kit;
 
 public class KitCmd implements CommandExecutor, TabCompleter {
 

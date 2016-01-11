@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Utils;
+package com.nubebuster.hg.utils;
 
 public class NameAlreadyInUseException extends Exception {
 

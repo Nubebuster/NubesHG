@@ -1,4 +1,4 @@
-package com.nubebuster.hg.Listeners;
+package com.nubebuster.hg.listeners;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,8 +38,8 @@ import org.bukkit.material.Dye;
 
 import com.nubebuster.hg.Gamer;
 import com.nubebuster.hg.HG;
-import com.nubebuster.hg.Data.MySQL;
-import com.nubebuster.hg.Utils.Undroppable;
+import com.nubebuster.hg.data.MySQL;
+import com.nubebuster.hg.utils.Undroppable;
 
 public class GameListener implements Listener {
 
