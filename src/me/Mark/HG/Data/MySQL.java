@@ -33,7 +33,7 @@ public class MySQL {
 	public static void openConnection() throws SQLException, ClassNotFoundException {
 		closeConnection();// close existing connection if exists
 		con = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, user, password);
-		con.prepareStatement("USE " + table).execute();
+		con.prepareStatement("USE " + database).execute();
 		PreparedStatement ss = con.prepareStatement("SHOW TABLES");
 		ResultSet r = ss.executeQuery();
 		if (!r.next()) {
