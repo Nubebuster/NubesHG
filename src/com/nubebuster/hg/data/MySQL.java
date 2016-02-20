@@ -37,7 +37,7 @@ public class MySQL {
 		PreparedStatement ss = con.prepareStatement("SHOW TABLES");
 		ResultSet r = ss.executeQuery();
 		if (!r.next()) {
-			PreparedStatement s = con.prepareStatement("CREATE TABLE IF NOT EXISTS `hg` (`uuid` varchar(36) NOT NULL,"
+			PreparedStatement s = con.prepareStatement("CREATE TABLE IF NOT EXISTS `" + table + "` (`uuid` varchar(36) NOT NULL,"
 					+ "`name` varchar(16) NOT NULL,`kills` int(11) NOT NULL,"
 					+ "`deaths` int(11) NOT NULL,`wins` int(11) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8");
 			s.execute();
