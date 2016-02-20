@@ -34,7 +34,7 @@ public class MySQL {
 		closeConnection();// close existing connection if exists
 		con = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, user, password);
 		con.prepareStatement("USE " + database).execute();
-		PreparedStatement ss = con.prepareStatement("SHOW TABLES");
+		PreparedStatement ss = con.prepareStatement("SHOW TABLES LIKE '" + table + "'");
 		ResultSet r = ss.executeQuery();
 		if (!r.next()) {
 			PreparedStatement s = con.prepareStatement("CREATE TABLE IF NOT EXISTS `" + table + "` (`uuid` varchar(36) NOT NULL,"
