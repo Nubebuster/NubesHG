@@ -60,7 +60,7 @@ public class GameListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
-		Player dead = event.getEntity();
+		final Player dead = event.getEntity();
 		List<ItemStack> drops = new ArrayList<ItemStack>();
 		for (ItemStack is : event.getDrops())
 			if (!is.containsEnchantment(Undroppable.ench))
@@ -70,7 +70,7 @@ public class GameListener implements Listener {
 			event.getDrops().add(is);
 		DamageCause cause = event.getEntity().getLastDamageCause().getCause();
 		if (event.getEntity().getKiller() != null) {
-			Player killer = event.getEntity().getKiller();
+			final Player killer = event.getEntity().getKiller();
 			String weapon = WordUtils
 					.capitalizeFully(killer.getItemInHand().getType().toString().replace("_", " ").toLowerCase());
 			String killname = killer.getName() + "(" + Gamer.getGamer(killer).getKit().getKitName() + ")";

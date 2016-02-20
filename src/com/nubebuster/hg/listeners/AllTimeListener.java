@@ -115,7 +115,7 @@ public class AllTimeListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {
-		Player p = event.getPlayer();
+		final Player p = event.getPlayer();
 		Gamer g = Gamer.getGamer(p);
 		if (HG.HG.gameTime > -1 && !g.isAlive())
 			event.getPlayer().setGameMode(GameMode.CREATIVE);

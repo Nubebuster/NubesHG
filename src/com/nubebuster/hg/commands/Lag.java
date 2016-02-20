@@ -1,7 +1,5 @@
 package com.nubebuster.hg.commands;
 
-import java.text.DecimalFormat;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,9 +8,10 @@ import org.bukkit.command.CommandSender;
 public class Lag implements Runnable, CommandExecutor {
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command arg1, String label, String[] args) {
+	public boolean onCommand(CommandSender sender, Command arg1, String label,
+			String[] args) {
 		double tps = doubleRoundTo2Decimals(getTPS());
-		int lag = (int) Math.round((20 - tps) / 20 * 100);
+		int lag = (int) Math.round((20D - tps) / 20D * 100D);
 		if (tps > 19.9)
 			tps = 20;
 		if (lag < 0)
@@ -23,13 +22,7 @@ public class Lag implements Runnable, CommandExecutor {
 	}
 
 	public Double doubleRoundTo2Decimals(double val) {
-		try {
-			DecimalFormat df = new DecimalFormat("##.##");
-			return Double.valueOf(df.format(val));
-		} catch (Exception e) {
-			DecimalFormat df = new DecimalFormat("##,##");
-			return Double.valueOf(df.format(val));
-		}
+		return Math.round(val * 100D) / 100D;
 	}
 
 	public static int TICK_COUNT = 0;

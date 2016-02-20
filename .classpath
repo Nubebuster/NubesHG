@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Mark/Documents/DeskFiles/BuildTools Spigot/Bukkit/target/bukkit-1.8.8-R0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mark/Servers/spigot.jar"/>
+	<classpathentry kind="lib" path="D:/Users/Gebruiker/Desktop/tmp/spigot.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
