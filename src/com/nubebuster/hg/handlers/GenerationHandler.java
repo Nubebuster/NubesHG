@@ -37,7 +37,7 @@ public class GenerationHandler {
 				int chunks2 = Bukkit.getViewDistance() + 32;
 
 				int chunksDistance = Math.max(chunks1, chunks2);
-				Chunk spawn = Bukkit.getWorld("world").getSpawnLocation().getChunk();
+				Chunk spawn = Bukkit.getWorld(HG.HG.getConfig().getString("world")).getSpawnLocation().getChunk();
 				for (int x = -chunksDistance; x <= chunksDistance; x++) {
 					for (int z = -chunksDistance; z <= chunksDistance; z++) {
 						DataPair pair = new DataPair(spawn.getX() + x, spawn.getZ() + z);
@@ -81,7 +81,8 @@ public class GenerationHandler {
 						if (!cordsItel.hasNext()) {
 							System.out.println("World is done generating");
 							try {
-								Bukkit.getPluginManager().disablePlugin(Bukkit.getPluginManager().getPlugin("TerrainControl"));
+								Bukkit.getPluginManager()
+										.disablePlugin(Bukkit.getPluginManager().getPlugin("TerrainControl"));
 							} catch (Exception e) {
 							}
 							for (Player op : Bukkit.getOnlinePlayers())
