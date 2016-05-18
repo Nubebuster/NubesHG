@@ -1,6 +1,8 @@
 package com.nubebuster.hg;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +23,7 @@ public class Gamer {
 	private Gamer(Player player) {
 		this.name = player.getName();
 		this.uuid = player.getUniqueId();
-		gamers.add(this);
+		gamers.put(uuid, this);
 	}
 
 	public Kit getKit() {
@@ -53,16 +55,16 @@ public class Gamer {
 	}
 
 	public void remove() {
-		gamers.remove(this);
+		gamers.remove(uuid);
 	}
 
-	private static final List<Gamer> gamers = new ArrayList<Gamer>();
+	// private static final List<Gamer> gamers = new ArrayList<Gamer>();
+
+	private static final HashMap<UUID, Gamer> gamers = new HashMap<UUID, Gamer>();
 
 	public static Gamer getGamer(Player p) {
-		for (Gamer g : gamers)
-			if (g.getName().equalsIgnoreCase(p.getName()))
-				return g;
-		return new Gamer(p);
+		Gamer g = gamers.get(p.getUniqueId());
+		return g != null ? g : new Gamer(p);
 	}
 
 	/**
@@ -70,27 +72,24 @@ public class Gamer {
 	 */
 	@Deprecated
 	public static Gamer getGamer(String name) {
-		for (Gamer g : gamers)
+		for (Gamer g : gamers.values())
 			if (g.getName().equalsIgnoreCase(name))
 				return g;
 		return null;
 	}
 
 	public static Gamer getGamer(UUID id) {
-		for (Gamer g : gamers)
-			if (g.getPlayer().getUniqueId().equals(id))
-				return g;
-		return null;
+		return gamers.get(id);
 	}
 
-	public static List<Gamer> getGamers() {
-		return gamers;
+	public static Collection<Gamer> getGamers() {
+		return gamers.values();
 	}
 
 	public static List<Gamer> getAliveGamers() {
 		List<Gamer> alive = new ArrayList<Gamer>();
 		boolean started = HG.HG.gameTime > -1;
-		for (Gamer g : gamers)
+		for (Gamer g : gamers.values())
 			if (started ? g.isAlive() : g.getPlayer().getGameMode() == GameMode.SURVIVAL)
 				alive.add(g);
 		return alive;
