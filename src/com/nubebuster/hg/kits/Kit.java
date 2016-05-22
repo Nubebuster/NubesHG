@@ -46,6 +46,7 @@ public abstract class Kit implements Listener {
 			registerKit(new Frosty());
 			registerKit(new Grandpa());
 			registerKit(new Gravedigger());
+			registerKit(new Freezer());
 			registerKit(new Jumper());
 			registerKit(new Kangaroo());
 			registerKit(new Kaya());
