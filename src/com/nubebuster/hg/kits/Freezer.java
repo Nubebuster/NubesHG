@@ -71,7 +71,7 @@ public class Freezer extends Kit {
 			Snowball b = (Snowball) event.getDamager();
 			if (balls.containsKey(b)) {
 				Gamer g = balls.get(b);
-				if (isOnCooldown(g))
+				if (isOnCooldown(g) || !hasAbillity(g.getPlayer()))
 					return;
 				balls.remove(b);
 				cooldown.put(g, System.currentTimeMillis() + COOLDOWN_TIME);

@@ -90,7 +90,9 @@ public class Gamer {
 		List<Gamer> alive = new ArrayList<Gamer>();
 		boolean started = HG.HG.gameTime > -1;
 		for (Gamer g : gamers.values())
-			if (started ? g.isAlive() : g.getPlayer().getGameMode() == GameMode.SURVIVAL)
+			if (g.getPlayer() == null) {
+				g.remove();
+			} else if (started ? g.isAlive() : g.getPlayer().getGameMode() == GameMode.SURVIVAL)
 				alive.add(g);
 		return alive;
 	}

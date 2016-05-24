@@ -101,6 +101,8 @@ public class GameListener implements Listener {
 			event.setDeathMessage(event.getDeathMessage().replace(dead.getName(), "%p"));
 		}
 		dead.setGameMode(GameMode.SPECTATOR);
+		Gamer deag = Gamer.getGamer(dead);
+		deag.setAlive(false);
 		event.setDeathMessage(ChatColor.AQUA
 				+ event.getDeathMessage().replace("%p",
 						dead.getName() + "(" + Gamer.getGamer(dead).getKit().getKitName() + ")")

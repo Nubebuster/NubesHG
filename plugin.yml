@@ -1,6 +1,6 @@
 name: NubesHG
 author: NubeBuster
-version: 1.10
+version: 1.13
 main: com.nubebuster.hg.HG
 website: https://www.spigotmc.org/resources/nubes-hunger-games.9062/
 load: Startup

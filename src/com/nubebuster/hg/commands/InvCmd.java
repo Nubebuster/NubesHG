@@ -17,7 +17,7 @@ public class InvCmd implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "You must be a player.");
 			return false;
 		}
-		if(!sender.hasPermission("hg.inv")) {
+		if (!sender.hasPermission("hg.inv")) {
 			sender.sendMessage(ChatColor.RED + "No permission.");
 			return false;
 		}
@@ -28,7 +28,7 @@ public class InvCmd implements CommandExecutor {
 		}
 		if (args.length == 0) {
 			Player nearest = null;
-			double distance = 0;
+			double distance = Integer.MAX_VALUE;
 			for (Gamer og : Gamer.getAliveGamers()) {
 				double dis = og.getPlayer().getLocation().distance(g.getPlayer().getLocation());
 				if (dis < distance) {
@@ -44,7 +44,6 @@ public class InvCmd implements CommandExecutor {
 			sender.sendMessage(ChatColor.GRAY + "Showing inventory of the neareast player, " + nearest.getName());
 			return false;
 		}
-		@SuppressWarnings("deprecation")
 		Player target = Bukkit.getPlayer(args[0]);
 		if (target == null) {
 			sender.sendMessage(ChatColor.RED + "That player is not online.");
