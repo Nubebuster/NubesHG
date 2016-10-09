@@ -35,7 +35,7 @@ public class None extends Kit {
 	@Override
 	protected List<String> getStartingItems() {
 		List<String> list = getNewStringList();
-		list.add("1 Challange");
+		list.add("1 Challenge");
 		return list;
 	}
 }

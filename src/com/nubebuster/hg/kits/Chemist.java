@@ -1,6 +1,5 @@
 package com.nubebuster.hg.kits;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -63,7 +62,7 @@ public class Chemist extends Kit {
 
 	@Override
 	protected List<String> getDescription() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = getNewStringList();
 		list.add("You receive a new batch of potions every 4 minutes");
 		return list;
 	}

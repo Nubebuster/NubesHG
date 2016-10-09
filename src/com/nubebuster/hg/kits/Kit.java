@@ -102,8 +102,17 @@ public abstract class Kit implements Listener {
 		ItemMeta im = item.getItemMeta();
 		if (getStartingItems().isEmpty())
 			lores.add("No starting items.");
-		else
-			lores.add("You start with: " + getStartingItems().toString());
+		else {
+			String items = "[";
+			for (String s : getStartingItems()) {
+				if (items.length() == 1)
+					items = s;
+				else
+					items = items + ",\n" + s;
+			}
+			items = items + "]";
+			lores.add("You start with: " + items);
+		}
 		im.setLore(lores);
 		im.setDisplayName(getKitName());
 		item.setItemMeta(im);
