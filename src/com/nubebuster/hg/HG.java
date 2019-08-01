@@ -22,8 +22,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
-import org.spigotmc.Metrics;
-import org.spigotmc.Metrics.Graph;
 
 import com.nubebuster.hg.api.GameStartEvent;
 import com.nubebuster.hg.api.SecondEvent;
@@ -57,7 +55,7 @@ import com.nubebuster.hg.utils.Undroppable;
 public class HG extends JavaPlugin {
 
 	public static HG HG;
-	public Metrics metrics;
+	//public Metrics metrics;
 	public String motd;
 	public int preTime, gameTime = -1;
 	public FileConfiguration config;
@@ -75,12 +73,12 @@ public class HG extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		try {
+/*		try {
 			metrics = new Metrics();
 			metrics.start();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		if (config.getBoolean("regenerate"))
 			GenerationHandler.generateChunks();
 		Kit.init();
@@ -163,7 +161,6 @@ public class HG extends JavaPlugin {
 		}, 0, 20);
 	}
 
-	@SuppressWarnings("deprecation")
 	private void start() {
 		Bukkit.getScheduler().cancelTask(preGameTask);
 		unRegisterPreEvents();
@@ -200,7 +197,7 @@ public class HG extends JavaPlugin {
 	}
 
 	private void logKits() {
-		Graph gr = metrics.createGraph("Kits");
+		/*Graph gr = metrics.createGraph("Kits");
 		for (Kit k : Kit.kits) {
 			int chosen = 0;
 			for (Gamer g : Gamer.getGamers())
@@ -216,7 +213,7 @@ public class HG extends JavaPlugin {
 				}
 			});
 		}
-		metrics.addGraph(gr);
+		metrics.addGraph(gr);*/
 	}
 
 	private Listener preListener, gameListener;
